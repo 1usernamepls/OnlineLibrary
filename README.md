@@ -1,9 +1,6 @@
 # MP4
 A repository for our MP4 final project, where we can copy and paste code for our classes :)
 
-
-
-
 AUTHOR INFO
 
 - Full Name: Ethan E. Lopez, Chantelle, Asiyah, Aidan Tran
