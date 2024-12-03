@@ -30,7 +30,7 @@ public class Book {
     public Book(Book b) {
         title = b.title;
         Random rand = new Random();
-         int min = 1000000000;
+        int min = 1000000000;
         int max = 1999999999;
         ISBN = rand.nextInt(max-min+1) + min;
         price = b.price;
