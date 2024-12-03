@@ -1,6 +1,6 @@
 import java.util.Random;
 
-public class Product implements Comparable<Product> {
+public class Product {
 
     private String product_name;
     private int productID;
@@ -82,16 +82,16 @@ public class Product implements Comparable<Product> {
         && this.productType.equals(p.productType));
     }
 
-    public int compareTo(Product p) {
-        if (this.price == p.price) {
-            return 0;
-        }
-        if (this.price > p.price) {
-            return 1;
-        }
-        if (this.price < p.price) {
-            return -1;
-        }
-    }
+    // public int compareTo(Product p) {
+    //     if (this.price == p.price) {
+    //         return 0;
+    //     }
+    //     if (this.price > p.price) {
+    //         return 1;
+    //     }
+    //     if (this.price < p.price) {
+    //         return -1;
+    //     }
+    // }
     
 }
