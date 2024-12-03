@@ -38,4 +38,28 @@ public class User {
         return lastName + ", " + firstName;
     }
 
+    @Override
+    public String toString() {
+        String s = "";
+        s += "USER ACCOUNT DETAILS" + "\n";
+        s += "--------------------" + "\n";
+        s += "  Email: " + email + "\n";
+        s += "  Username: " + username + "\n";
+        s += "  Password: " + password + "\n";
+        s += "  Name: " + lastName + ", " + firstName + "\n";
+        return s;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof User)) {
+            return false;
+        }
+        User u = (User) o;
+        return (this.email.equals(u.email));
+    }
+
 }
