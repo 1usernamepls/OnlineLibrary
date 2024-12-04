@@ -1,6 +1,6 @@
 import java.util.Random;
 
-public class Book {
+public abstract class Book {
 
     private String title;
     private int ISBN;
