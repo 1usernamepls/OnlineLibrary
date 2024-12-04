@@ -60,6 +60,7 @@ public class Order{
 
     public String toString(){
         String s = "";
+        s += "\n";
         s += "ORDER DETAILS \n";
         s += "-------------------- \n";
         s += "Customer: " + customer.getName() + " (" + customer.getEmail() +") \n";
