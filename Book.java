@@ -1,23 +1,21 @@
 import java.util.Random;
 
-public abstract class Book {
+public abstract class Book implements Comparable<Book> {
 
-    private String title;
-    private int ISBN;
-    private double price;
-    private boolean availability;
-    private String genre;
+    protected String title;
+    protected String author;
+    protected String language;
+    protected int publishing;
+    protected int ISBN;
+    protected double price;
+    protected boolean availability;
+    protected String genre;
 
-    public Book() {
-        title = null;
-        ISBN = 0;
-        price = 0.0;
-        availability = false;
-        genre = null;  
-    }
-
-    public Book(String t, double p, boolean a, String g) {
+    public Book(String t, String auth, String l, int pub, double p, boolean a, String g) {
         title = t;
+        author = auth;
+        language = l;
+        publishing = pub;
         Random rand = new Random();
         int min = 1000000000; //This assumes we want to do 10 digit ISBN
         int max = 1999999999;
@@ -29,6 +27,9 @@ public abstract class Book {
 
     public Book(Book b) {
         title = b.title;
+        author = b.author;
+        language = b.language;
+        publishing = b.publishing;
         Random rand = new Random();
         int min = 1000000000;
         int max = 1999999999;
@@ -40,6 +41,14 @@ public abstract class Book {
 
     public String getTitle() {
         return title;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public int getPublishing() {
+        return publishing;
     }
 
     public int getISBN() {
@@ -58,10 +67,15 @@ public abstract class Book {
         return genre;
     }
 
+    public abstract void setBestseller(boolean bestseller);
+
     @Override
     public String toString() {
         String s = "";
         s += "Title: " + title + "\n";
+        s += "Author: " + author + "\n";
+        s += "Language: " + language + "\n";
+        s += "Published: " + publishing + "\n";
         s += "      ISBN: " + ISBN + "\n";
         s += "      Price: $" + price + "\n";
         s += "      Availability: " + availability + "\n";
@@ -78,10 +92,11 @@ public abstract class Book {
             return false;
         }
         Book b = (Book) o;
-        return (this.title.equals(b.title) && 
-                this.genre.equals(b.genre));
+        return (this.title.equals(b.title) 
+        && this.author.equals(b.author) &&
+        this.genre.equals(b.genre));
     }
-
+    
     // public int compareTo(Book b) {
     //     if (this.price == b.price) {
     //         return 0;
@@ -93,5 +108,5 @@ public abstract class Book {
     //         return -1;
     //     }
     // }
-    
+
 }
