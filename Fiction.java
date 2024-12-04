@@ -2,9 +2,9 @@ public class Fiction extends Book {
 
     protected boolean bestseller;
 
-    public Fiction(String title, String author, String language, int publishing, double price, boolean availability, String genre, boolean bestseller) {
-        super(title, author, language, publishing, price, availability, "Fiction");
-        this.bestseller = bestseller;
+    public Fiction(String t, String auth, String l, int pub, double p, boolean a, int s, String g, boolean b) {
+        super(t, auth, l, pub, p, a, s, g);
+        this.bestseller = b;
     }
 
     public boolean isBestseller() {
@@ -15,7 +15,6 @@ public class Fiction extends Book {
         this.bestseller = bestseller;
     }
 
-    @Override
     public String toString() {
         return super.toString() + "      Bestseller: " + (bestseller ? "Yes" : "No") + "\n";
     }
