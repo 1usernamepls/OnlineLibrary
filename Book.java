@@ -96,6 +96,7 @@ public abstract class Book implements Comparable<Book> {
         s += "      Price: $" + price + "\n";
         s += "      Availability: " + availability + "\n";
         s += "      Category: " + category + "\n";
+        s += "      # IN STOCK: " + stock + "\n";
         return s;
     }
 
