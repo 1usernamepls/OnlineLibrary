@@ -41,6 +41,7 @@ public class User {
     @Override
     public String toString() {
         String s = "";
+        s += "\n";
         s += "USER ACCOUNT DETAILS" + "\n";
         s += "--------------------" + "\n";
         s += "  Email: " + email + "\n";
