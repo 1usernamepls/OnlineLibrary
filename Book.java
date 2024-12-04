@@ -9,9 +9,10 @@ public abstract class Book implements Comparable<Book> {
     protected int ISBN;
     protected double price;
     protected boolean availability;
+    protected int stock;
     protected String genre;
 
-    public Book(String t, String auth, String l, int pub, double p, boolean a, String g) {
+    public Book(String t, String auth, String l, int pub, double p, boolean a, int s, String g) {
         title = t;
         author = auth;
         language = l;
@@ -22,6 +23,7 @@ public abstract class Book implements Comparable<Book> {
         ISBN = rand.nextInt(max - min + 1) + min; 
         price = p;
         availability = a;
+        stock = s;
         genre = g;
     }
 
@@ -36,6 +38,7 @@ public abstract class Book implements Comparable<Book> {
         ISBN = rand.nextInt(max-min+1) + min;
         price = b.price;
         availability = b.availability;
+        stock = b.stock;
         genre = b.genre;
     }
 
@@ -63,8 +66,16 @@ public abstract class Book implements Comparable<Book> {
         return availability;
     }
 
+    public int getStock() {
+        return stock;
+    }
+
     public String getGenre() {
         return genre;
+    }
+
+    public void setStock(int s) {
+        stock = s;
     }
 
     public abstract void setBestseller(boolean bestseller);
@@ -72,6 +83,7 @@ public abstract class Book implements Comparable<Book> {
     @Override
     public String toString() {
         String s = "";
+        s += "\n";
         s += "Title: " + title + "\n";
         s += "Author: " + author + "\n";
         s += "Language: " + language + "\n";
