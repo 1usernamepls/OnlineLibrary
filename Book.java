@@ -10,21 +10,21 @@ public abstract class Book implements Comparable<Book> {
     protected double price;
     protected boolean availability;
     protected int stock;
-    protected String genre;
+    protected String category; //Replace genre with category (Fiction, Nonfiction, etc. are categories not genres)
 
-    public Book(String t, String auth, String l, int pub, double p, boolean a, int s, String g) {
+    public Book(String t, String auth, String l, int pub, double p, boolean a, int s, String c) {
         title = t;
         author = auth;
         language = l;
         publishing = pub;
         Random rand = new Random();
-        int min = 1000000000; //This assumes we want to do 10 digit ISBN
+        int min = 1000000000; // Assumes a 10-digit ISBN
         int max = 1999999999;
         ISBN = rand.nextInt(max - min + 1) + min; 
         price = p;
         availability = a;
         stock = s;
-        genre = g;
+        category = c; 
     }
 
     public Book(Book b) {
@@ -35,11 +35,11 @@ public abstract class Book implements Comparable<Book> {
         Random rand = new Random();
         int min = 1000000000;
         int max = 1999999999;
-        ISBN = rand.nextInt(max-min+1) + min;
+        ISBN = rand.nextInt(max - min + 1) + min;
         price = b.price;
         availability = b.availability;
         stock = b.stock;
-        genre = b.genre;
+        category = b.category; // Copy category
     }
 
     public String getTitle() {
@@ -70,12 +70,16 @@ public abstract class Book implements Comparable<Book> {
         return stock;
     }
 
-    public String getGenre() {
-        return genre;
+    public String getCategory() {
+        return category;
     }
 
     public void setStock(int s) {
         stock = s;
+    }
+
+    public void setCategory(String c) {
+        category = c;
     }
 
     public abstract void setBestseller(boolean bestseller);
@@ -91,7 +95,7 @@ public abstract class Book implements Comparable<Book> {
         s += "      ISBN: " + ISBN + "\n";
         s += "      Price: $" + price + "\n";
         s += "      Availability: " + availability + "\n";
-        s += "      Genre: " + genre + "\n";
+        s += "      Category: " + category + "\n";
         return s;
     }
 
@@ -106,7 +110,7 @@ public abstract class Book implements Comparable<Book> {
         Book b = (Book) o;
         return (this.title.equals(b.title) 
         && this.author.equals(b.author) &&
-        this.genre.equals(b.genre));
+        this.category.equals(b.category));
     }
     
     public int compareTo(Book b) {
@@ -120,5 +124,4 @@ public abstract class Book implements Comparable<Book> {
             return -1;
         }
     }
-
 }
