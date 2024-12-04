@@ -11,17 +11,18 @@ public class BookShop {
         User a = new User(email, username, password, firstName, lastName);
         System.out.println(a);
 
-        // String title = "Harry Potter And The Sourcerer's Stone";
-        // String author = "J.K. Rowling";
-        // String language = "English";
-        // int publishing = 1997;
-        // double price = 6.99;
-        // boolean availability = true;
-        // String genre = "FANTASY";
-        // boolean bestseller = true;   
+        String title = "Harry Potter And The Sourcerer's Stone";
+        String author = "J.K. Rowling";
+        String language = "English";
+        int publishing = 1997;
+        double price = 6.99;
+        boolean availability = true;
+        int stock = 5;
+        String category = "FANTASY";
+        boolean bestseller = true;   
         
-        // Fiction b = new Fiction(title, author, language, publishing, price, availability, genre, bestseller);
-        // System.out.println(b);
+        Fiction b = new Fiction(title, author, language, publishing, price, availability, stock, category, bestseller);
+        System.out.println(b);
 
     }
     
