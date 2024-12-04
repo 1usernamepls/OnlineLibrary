@@ -113,10 +113,10 @@ public abstract class Book implements Comparable<Book> {
         if (this.price == b.price) {
             return 0;
         }
-        if (this.price > b.price) {
+        else if (this.price > b.price) {
             return 1;
         }
-        if (this.price < b.price) {
+        else {
             return -1;
         }
     }
