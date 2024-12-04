@@ -2,8 +2,8 @@ public class Fiction extends Book {
 
     protected boolean bestseller;
 
-    public Fiction(String t, String auth, String l, int pub, double p, boolean a, int s, String g, boolean b) {
-        super(t, auth, l, pub, p, a, s, g);
+    public Fiction(String t, String auth, String l, int pub, double p, boolean a, int s, String c, boolean b) {
+        super(t, auth, l, pub, p, a, s, c);
         this.bestseller = b;
     }
 
