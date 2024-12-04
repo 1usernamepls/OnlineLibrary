@@ -1,9 +1,9 @@
 public class Fiction extends Book {
 
-    private boolean bestseller;
+    protected boolean bestseller;
 
-    public Fiction(String title, double price, boolean availability, boolean bestseller) {
-        super(title, price, availability, "Fiction");
+    public Fiction(String title, String author, String language, int publishing, double price, boolean availability, String genre, boolean bestseller) {
+        super(title, author, language, publishing, price, availability, "Fiction");
         this.bestseller = bestseller;
     }
 
