@@ -6,7 +6,7 @@ public class BookShop {
 
         // Scanner scnr = new Scanner(System.in);
 
-        // System.out.println("Hello There First Time User! It's my pleasure to welcome to our ONLINE BOOKSHOP!");
+        // System.out.println("Hello There First Time User! It's my pleasure to welcome you to our ONLINE BOOKSHOP!");
         // System.out.println("My name is Doti! I'm the system's bot who will help you on this exciting journey! :>");
         // System.out.println("First let's get you set up with an account...");
 
