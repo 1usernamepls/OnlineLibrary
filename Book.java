@@ -82,8 +82,6 @@ public abstract class Book implements Comparable<Book> {
         category = c;
     }
 
-    public abstract void setBestseller(boolean bestseller);
-
     @Override
     public String toString() {
         String s = "";
