@@ -4,7 +4,7 @@ public class Nonfiction extends Book {
     protected int edition; // Edition of the book
 
     public Nonfiction(String t, String auth, String l, int pub, double p, boolean a, int s, String genre, int edition) {
-        super(t, auth, l, pub, p, a, s, "Nonfiction");
+        super(t, auth, l, pub, p, a, s, "NONFICTION");
         this.genre = genre;
         this.edition = edition;
     }
