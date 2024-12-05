@@ -1,10 +1,10 @@
-public class User {
+public abstract class User {
     
-    private String email;
-    private String username;
-    private String password;
-    private String firstName;
-    private String lastName;
+    protected String email;
+    protected String username;
+    protected String password;
+    protected String firstName;
+    protected String lastName;
 
     public User(String e, String u, String p, String f, String l) {
         email = e;
