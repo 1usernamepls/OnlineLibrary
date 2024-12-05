@@ -14,7 +14,7 @@ ERRORS
 - N/A
 
 SOURCES
-- Only resources from inside class :>
+
 - Used geeksforgeeks.org for guidance using the LocalDate package
      https://www.geeksforgeeks.org/java-time-localdate-class-in-java/
 - stackoverflow.com was used to find a method to calculate the time elapsed between 2 dates
