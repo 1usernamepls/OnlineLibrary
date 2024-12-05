@@ -16,5 +16,5 @@ ERRORS
 SOURCES
 
 - Only resources from inside class :>
-- Used geeksforgeeks.org for guidance using the LocalTime package
-    https://www.geeksforgeeks.org/java-time-localtime-class-in-java/ 
+- Used geeksforgeeks.org for guidance using the LocalDate package
+    https://www.geeksforgeeks.org/java-time-localdate-class-in-java/
