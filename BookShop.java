@@ -116,6 +116,8 @@ public class BookShop {
         Nonfiction c = new Nonfiction(title2, author2, language2, publishing2, price2, availability2, stock2, genre2, edition, peerReviewed);
         System.out.println(c);
 
+        scnr.close();
+
     }
     
 }
