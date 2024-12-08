@@ -22,7 +22,7 @@ public class BookShop {
         System.out.println("Perfect!");
         System.out.println("Now what is your first name? : ");
         String firstName = scnr.nextLine();
-        while (firstName == null || firstName.matches(".*\\d.*")) {
+        while (firstName == null || firstName.matches(".*\\d.*") || Character.isLetter(firstName.charAt(0)) == false) {
             System.out.println("That is not a name! Please try again...");
             System.out.println("Now what is your first name? : ");
             firstName = scnr.nextLine();
@@ -30,7 +30,7 @@ public class BookShop {
 
         System.out.println("Last name? : ");
         String lastName = scnr.nextLine();
-        while (lastName == null || lastName.matches(".*\\d.*")) {
+        while (lastName == null || lastName.matches(".*\\d.*") || Character.isLetter(lastName.charAt(0)) == false) {
             System.out.println("That is not a name! Please try again...");
             System.out.println("Last name? : ");
             lastName = scnr.nextLine();
