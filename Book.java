@@ -82,6 +82,10 @@ public abstract class Book implements Comparable<Book> {
         category = c;
     }
 
+    public abstract String getGenre();
+
+    public abstract void setGenre(String genre);
+
     @Override
     public String toString() {
         String s = "";
