@@ -1,36 +1,92 @@
-//import java.util.Scanner;
+import java.util.Scanner;
 
 public class BookShop {
 
     public static void main(String[] args) {
 
-        // Scanner scnr = new Scanner(System.in);
+        Scanner scnr = new Scanner(System.in);
 
-        // System.out.println("Hello There First Time User! It's my pleasure to welcome you to our ONLINE BOOKSHOP!");
-        // System.out.println("My name is Doti! I'm the system's bot who will help you on this exciting journey! :>");
-        // System.out.println("First let's get you set up with an account...");
+        System.out.println("Hello There First Time User! It's my pleasure to welcome you to our ONLINE BOOKSHOP!");
+        System.out.println("My name is Doti! I'm the system's bot who will help you on this exciting journey! :>");
+        System.out.println("First let's get you set up with an account...");
 
-        // System.out.println("Some personal information we need to know: ");
-        // System.out.println("What is your email? : ");
-        // String email = scnr.nextLine();
-        // System.out.println("Perfect!");
-        // System.out.println("Now what is your first name? : ");
-        // String firstName = scnr.nextLine();
-        // System.out.println("Last name? : ");
-        // String lastName = scnr.nextLine();
-        // System.out.println("Nice! Moving on, what username would you like to have with us? : ");
-        // String username = scnr.nextLine();
-        // System.out.println("Finally most important, type in a password here: ");
-        // String password = scnr.nextLine();
+        System.out.println("Some personal information we need to know: ");
+        System.out.println("What is your email? : ");
+        String email = scnr.nextLine();
+        while (email.contains("@") == false) {
+            System.out.println("That is not an email!");
+            System.out.println("What is your email? : ");
+            email = scnr.nextLine();
+        }
 
-        // String email = "gmop@chapman.edu";
-        // String username = "THE14u";
-        // String password = "hello123!";
-        // String firstName = "Paul";
-        // String lastName = "Sanderson";
+        System.out.println("Perfect!");
+        System.out.println("Now what is your first name? : ");
+        String firstName = scnr.nextLine();
+        while (firstName == null || firstName.matches(".*\\d.*")) {
+            System.out.println("That is not a name! Please try again...");
+            System.out.println("Now what is your first name? : ");
+            firstName = scnr.nextLine();
+        }
 
-        // User a = new User(email, username, password, firstName, lastName);
-        // System.out.println(a);
+        System.out.println("Last name? : ");
+        String lastName = scnr.nextLine();
+        while (lastName == null || lastName.matches(".*\\d.*")) {
+            System.out.println("That is not a name! Please try again...");
+            System.out.println("Last name? : ");
+            lastName = scnr.nextLine();
+        }
+
+        System.out.println("Nice! Moving on, what username would you like to have with us?");
+        System.out.println("Please provide a username that follows these guidelines: ");
+        System.out.println("\t 1) Has at least 5 characters");
+        System.out.println("\t 2) Starts with a letter");
+        System.out.println("\t 3) Is less than 15 characters");
+        System.out.println("Type your username here: ");
+        String username = scnr.nextLine();
+        while (username == null || Character.isLetter(username.charAt(0)) == false || username.length() < 5 || username.length() > 15) {
+            System.out.println("That is not a valid username!");
+            System.out.println("Please provide a username that follows these guidelines: ");
+            System.out.println("\t 1) Has at least 5 characters");
+            System.out.println("\t 2) Starts with a letter");
+            System.out.println("\t 3) Is less than 16 characters");
+            System.out.println("Type your username here: ");
+            username = scnr.nextLine();
+        }
+
+        System.out.println("Now let's type in a password!");
+        System.out.println("Make sure your password follows these rules: ");
+        System.out.println("\t 1) Has at least 8 characters");
+        System.out.println("\t 2) Starts with a lettter");
+        System.out.println("\t 3) Has at least one number");
+        System.out.println("\t 4) Is less than 13 characters");
+        System.out.println("Type your password here: ");
+        String password = scnr.nextLine();
+        while (password == null || Character.isLetter(password.charAt(0)) == false || password.length() < 8 || password.length() > 12 || password.matches(".*\\d.*") == false) {
+            System.out.println("That is not a valid password!");
+            System.out.println("Make sure your password follows these rules: ");
+            System.out.println("\t 1) Has at least 8 characters");
+            System.out.println("\t 2) Starts with a lettter");
+            System.out.println("\t 3) Has at least one number");
+            System.out.println("\t 4) Is less than 13 characters");
+            System.out.println("Type your password here: ");
+            password = scnr.nextLine();
+        }
+
+        System.out.println("Finally, most important, do you identify as a customer or an administrator? : ");
+        String user = scnr.nextLine();
+        while (user.equals("customer") == false && user.equals("administrator") == false) {
+            System.out.println("That is not a valid user type!");
+            System.out.println("Try again.");
+            System.out.println("do you identify as a customer or an administrator? : ");
+            user = scnr.nextLine();
+        }
+
+        if (user.equals("customer")) {
+            Customer a = new Customer(email, username, password, firstName, lastName);
+            System.out.println(a);
+        }
+
+        System.out.println("Congrats! Your account has been successfully created. Now it's time to begin shopping!");
 
         String title = "Harry Potter And The Sourcerer's Stone";
         String author = "J.K. Rowling";
@@ -40,9 +96,10 @@ public class BookShop {
         boolean availability = true;
         int stock = 5;
         String genre = "FANTASY";
-        boolean bestseller = true;   
+        boolean bestseller = true; 
+        String ageGroup = "8+ Years Old";  
         
-        Fiction b = new Fiction(title, author, language, publishing, price, availability, stock, genre, bestseller);
+        Fiction b = new Fiction(title, author, language, publishing, price, availability, stock, genre, bestseller, ageGroup);
         System.out.println(b);
 
         String title2 = "What We Carry";
@@ -54,8 +111,9 @@ public class BookShop {
         int stock2 = 8;
         String genre2 = "MEMOIR";
         int edition = 1;
+        boolean peerReviewed = false;
 
-        Nonfiction c = new Nonfiction(title2, author2, language2, publishing2, price2, availability2, stock2, genre2, edition);
+        Nonfiction c = new Nonfiction(title2, author2, language2, publishing2, price2, availability2, stock2, genre2, edition, peerReviewed);
         System.out.println(c);
 
     }
