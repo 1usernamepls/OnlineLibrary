@@ -10,7 +10,7 @@ public abstract class Book implements Comparable<Book> {
     protected double price;
     protected boolean availability;
     protected int stock;
-    protected String category; //Replace genre with category (Fiction, Nonfiction, etc. are categories not genres)
+    protected String category; 
 
     public Book(String t, String auth, String l, int pub, double p, boolean a, int s, String c) {
         title = t;
@@ -18,7 +18,7 @@ public abstract class Book implements Comparable<Book> {
         language = l;
         publishing = pub;
         Random rand = new Random();
-        int min = 1000000000; // Assumes a 10-digit ISBN
+        int min = 1000000000; // assumes a 10-digit ISBN
         int max = 1999999999;
         ISBN = rand.nextInt(max - min + 1) + min; 
         price = p;
@@ -39,8 +39,10 @@ public abstract class Book implements Comparable<Book> {
         price = b.price;
         availability = b.availability;
         stock = b.stock;
-        category = b.category; // Copy category
+        category = b.category; 
     }
+
+    public abstract String getDetails(); // abstract method for detailed information
 
     public String getTitle() {
         return title;
@@ -82,10 +84,6 @@ public abstract class Book implements Comparable<Book> {
         category = c;
     }
 
-    public abstract String getGenre();
-
-    public abstract void setGenre(String genre);
-
     @Override
     public String toString() {
         String s = "";
@@ -117,14 +115,6 @@ public abstract class Book implements Comparable<Book> {
     }
     
     public int compareTo(Book b) {
-        if (this.price == b.price) {
-            return 0;
-        }
-        else if (this.price > b.price) {
-            return 1;
-        }
-        else {
-            return -1;
-        }
+        return Double.compare(this.price, b.price);
     }
 }
