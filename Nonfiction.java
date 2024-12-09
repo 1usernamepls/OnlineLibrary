@@ -1,8 +1,7 @@
 public class Nonfiction extends Book {
-
-    protected String genre; // History, science, biography, etc.
-    protected int edition; // Edition of the book
-    protected boolean isPeerReviewed; // Whether the book is peer-reviewed
+    protected String genre; //bibliography, literature review, historical, etc
+    protected int edition;
+    protected boolean isPeerReviewed; // true/false
 
     public Nonfiction(String t, String auth, String l, int pub, double p, boolean a, int s, String genre, int edition, boolean isPeerReviewed) {
         super(t, auth, l, pub, p, a, s, "Nonfiction");
@@ -24,7 +23,7 @@ public class Nonfiction extends Book {
     }
 
     public void setEdition(int edition) {
-        if (edition > 0) { 
+        if (edition > 0) {
             this.edition = edition;
         } else {
             throw new IllegalArgumentException("Edition must be a positive number.");
@@ -38,19 +37,15 @@ public class Nonfiction extends Book {
     public void setPeerReviewed(boolean isPeerReviewed) {
         this.isPeerReviewed = isPeerReviewed;
     }
-
     
+    //Nonfiction specific target audience 
     @Override
-    public String getDetails() {
-        return "Nonfiction Genre: " + genre + ", Edition: " + edition + 
-               ", Peer Reviewed: " + (isPeerReviewed ? "Yes" : "No");
+    public String getTargetAudience() {
+        return "Target Audience: Readers interested in " + genre + " (Peer Reviewed: " + (isPeerReviewed ? "Yes" : "No") + ").";
     }
 
     @Override
     public String toString() {
-        return super.toString() 
-                + "      Genre: " + genre + "\n" 
-                + "      Edition: " + edition + "\n"
-                + "      Peer Reviewed: " + (isPeerReviewed ? "Yes" : "No") + "\n";
+        return super.toString() + "\nGenre: " + genre + "\nEdition: " + edition + "\n" + getTargetAudience();
     }
 }
