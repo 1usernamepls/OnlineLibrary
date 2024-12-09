@@ -1,7 +1,7 @@
 public class Fiction extends Book {
     protected boolean bestseller; 
-    protected String genre; //horror, sci-fi, etc
-    protected String ageGroup; // target audience 
+    protected String genre; // Horror, sci-fi, etc.
+    protected String ageGroup; // Target audience
 
     public Fiction(String t, String auth, String l, int pub, double p, boolean a, int s, String genre, boolean bestseller, String ageGroup) {
         super(t, auth, l, pub, p, a, s, "Fiction"); 
@@ -10,7 +10,6 @@ public class Fiction extends Book {
         this.ageGroup = ageGroup;
     }
 
-    //bestSeller setter/getters
     public boolean isBestseller() {
         return bestseller;
     }
@@ -19,7 +18,6 @@ public class Fiction extends Book {
         this.bestseller = bestseller;
     }
 
-    //genre setter/getters
     public String getGenre() {
         return genre;
     }
@@ -28,13 +26,18 @@ public class Fiction extends Book {
         this.genre = genre;
     }
 
-    //ageGroup setters/getters
     public String getAgeGroup() {
         return ageGroup;
     }
 
     public void setAgeGroup(String ageGroup) {
         this.ageGroup = ageGroup;
+    }
+
+    @Override
+    public String getDetails() {
+        return "Fiction Genre: " + genre + ", Bestseller: " + (bestseller ? "Yes" : "No") + 
+               ", Target Age Group: " + ageGroup;
     }
 
     @Override
