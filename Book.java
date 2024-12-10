@@ -50,6 +50,10 @@ public abstract class Book implements Comparable<Book> {
         return author;
     }
 
+    public String getLanguage() {
+        return language;
+    }
+
     public int getPublishing() {
         return publishing;
     }
@@ -78,10 +82,12 @@ public abstract class Book implements Comparable<Book> {
         stock = s;
     }
 
-    public void setCategory(String c) {
-        category = c;
+    public void setPrice(double p) {
+        price = p;
     }
 
+    public abstract String getGenre();
+    public abstract void setGenre(String genre);
     public abstract String getTargetAudience();
 
     @Override
