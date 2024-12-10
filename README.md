@@ -15,6 +15,7 @@ ERRORS
 
 SOURCES
 
+- Worked alongside a Computer Science student, David Sohn, who showed me how to identify a number in a String using (String).matches(".*\\d.*")
 - Used geeksforgeeks.org for guidance using the LocalDate package
      https://www.geeksforgeeks.org/java-time-localdate-class-in-java/
 - stackoverflow.com was used to find a method to calculate the time elapsed between 2 dates
