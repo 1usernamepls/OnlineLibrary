@@ -13,7 +13,7 @@ public class BookShop {
         System.out.println("Some personal information we need to know: ");
         System.out.println("What is your email? : ");
         String email = scnr.nextLine();
-        while (email.contains("@") == false) {
+        while (email.contains("@") == false || email.contains(".") == false || Character.isLetter(email.charAt(0)) == false) {
             System.out.println("That is not an email!");
             System.out.println("What is your email? : ");
             email = scnr.nextLine();
