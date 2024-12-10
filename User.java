@@ -64,7 +64,9 @@ public abstract class User {
             return false;
         }
         User u = (User) o;
-        return (this.email.equals(u.email));
+        return (this.email.equals(u.email) && 
+        this.firstName.equals(u.firstName) &&
+        this.lastName.equals(u.lastName));
     }
 
 }
