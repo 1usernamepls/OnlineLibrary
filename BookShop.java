@@ -97,7 +97,7 @@ public class BookShop {
         int stock = 5;
         String genre = "FANTASY";
         boolean bestseller = true; 
-        String ageGroup = "8+ Years Old";  
+        String ageGroup = "8+";  
         
         Fiction b = new Fiction(title, author, language, publishing, price, availability, stock, genre, bestseller, ageGroup);
         System.out.println(b);
@@ -112,8 +112,9 @@ public class BookShop {
         String genre2 = "MEMOIR";
         int edition = 1;
         boolean peerReviewed = false;
+        String topic = "DISABILITY";
 
-        Nonfiction c = new Nonfiction(title2, author2, language2, publishing2, price2, availability2, stock2, genre2, edition, peerReviewed);
+        Nonfiction c = new Nonfiction(title2, author2, language2, publishing2, price2, availability2, stock2, genre2, edition, peerReviewed, topic);
         System.out.println(c);
 
         scnr.close();
