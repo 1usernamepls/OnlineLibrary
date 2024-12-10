@@ -14,14 +14,6 @@ public abstract class User {
         lastName = l;
     }
 
-    public User(User u) {
-        email = u.email;
-        username = u.username;
-        password = u.password;
-        firstName = u.firstName;
-        lastName = u.lastName;
-    }
-
     public String getEmail() {
         return email;
     }
