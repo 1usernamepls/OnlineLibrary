@@ -18,28 +18,29 @@ public abstract class User {
         return email;
     }
 
-    public void setEmail(String e) {
-        email = e;
-    }
-
     public String getUsername() {
         return username;
+    }
+
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getName() {
+        return lastName + ", " + firstName;
+    }
+
+    public void setEmail(String e) {
+        email = e;
     }
 
     public void setUsername(String u) {
         username = u;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
     public void setPassword(String p) {
         password = p;
-    }
-
-    public String getName() {
-        return lastName + ", " + firstName;
     }
 
     @Override
