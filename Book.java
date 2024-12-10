@@ -116,8 +116,7 @@ public abstract class Book implements Comparable<Book> {
         }
         Book b = (Book) o;
         return (this.title.equals(b.title) 
-        && this.author.equals(b.author) &&
-        this.category.equals(b.category));
+        && this.author.equals(b.author));
     }
     
     public int compareTo(Book b) {
