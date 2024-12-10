@@ -10,7 +10,7 @@ public abstract class Book implements Comparable<Book> {
     protected double price;
     protected boolean availability;
     protected int stock;
-    protected String category;
+    protected String category; //Replace genre with category (Fiction, Nonfiction, etc. are categories not genres)
 
     public Book(String t, String auth, String l, int pub, double p, boolean a, int s, String c) {
         title = t;
@@ -18,13 +18,13 @@ public abstract class Book implements Comparable<Book> {
         language = l;
         publishing = pub;
         Random rand = new Random();
-        int min = 1000000000;
+        int min = 1000000000; // Assumes a 10-digit ISBN
         int max = 1999999999;
-        ISBN = rand.nextInt(max - min + 1) + min;
+        ISBN = rand.nextInt(max - min + 1) + min; 
         price = p;
         availability = a;
         stock = s;
-        category = c;
+        category = c; 
     }
 
     public Book(Book b) {
@@ -39,7 +39,7 @@ public abstract class Book implements Comparable<Book> {
         price = b.price;
         availability = b.availability;
         stock = b.stock;
-        category = b.category;
+        category = b.category; // Copy category
     }
 
     public String getTitle() {
@@ -86,20 +86,43 @@ public abstract class Book implements Comparable<Book> {
 
     @Override
     public String toString() {
-        return "Title: " + title + "\nAuthor: " + author + "\nLanguage: " + language +
-               "\nPublished: " + publishing + "\nISBN: " + ISBN + "\nPrice: $" + price +
-               "\nAvailability: " + availability + "\nCategory: " + category + "\nStock: " + stock;
+        String s = "";
+        s += "\n";
+        s += "Title: " + title + "\n";
+        s += "Author: " + author + "\n";
+        s += "Language: " + language + "\n";
+        s += "Published: " + publishing + "\n";
+        s += "\tISBN: " + ISBN + "\n";
+        s += "\tPrice: $" + price + "\n";
+        s += "\tAvailability: " + availability + "\n";
+        s += "\tCategory: " + category + "\n";
+        s += "\t# IN STOCK: " + stock + "\n";
+        return s;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Book)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Book)) {
+            return false;
+        }
         Book b = (Book) o;
-        return this.title.equals(b.title) && this.author.equals(b.author) && this.category.equals(b.category);
+        return (this.title.equals(b.title) 
+        && this.author.equals(b.author) &&
+        this.category.equals(b.category));
     }
-
+    
     public int compareTo(Book b) {
-        return Double.compare(this.price, b.price);
+        if (this.price == b.price) {
+            return 0;
+        }
+        else if (this.price > b.price) {
+            return 1;
+        }
+        else {
+            return -1;
+        }
     }
 }
