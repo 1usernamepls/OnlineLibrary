@@ -36,7 +36,7 @@ public class Fiction extends Book {
     //Fiction specific target audience 
     @Override
     public String getTargetAudience() {
-        return "Target Audience: " + ageGroup + " readers who enjoy " + genre + " fiction.";
+        return "Target Audience: Readers " + ageGroup + " years old who enjoy " + genre + " fiction.";
     }
 
     @Override
