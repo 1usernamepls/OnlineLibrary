@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Administrator extends User {
-    private List<Book> books; // list of books in the store to manage
+    protected List<Book> books; // list of books in the store to manage
 
 
     public Administrator(String e, String u, String p, String f, String l){
