@@ -2,6 +2,21 @@ import java.util.Scanner;
 
 public class BookShop {
 
+    public static void userNameGuidelines() {
+        System.out.println("Please provide a username that follows these guidelines: ");
+        System.out.println("\t 1) Has at least 5 characters");
+        System.out.println("\t 2) Starts with a letter");
+        System.out.println("\t 3) Is less than 16 characters");
+    }
+
+    public static void passWordGuidelines() {
+        System.out.println("Make sure your password follows these rules: ");
+        System.out.println("\t 1) Has at least 8 characters");
+        System.out.println("\t 2) Starts with a lettter");
+        System.out.println("\t 3) Has at least one number");
+        System.out.println("\t 4) Is less than 13 characters");
+    }
+
     public static void main(String[] args) {
 
         Scanner scnr = new Scanner(System.in);
@@ -37,37 +52,23 @@ public class BookShop {
         }
 
         System.out.println("Nice! Moving on, what username would you like to have with us?");
-        System.out.println("Please provide a username that follows these guidelines: ");
-        System.out.println("\t 1) Has at least 5 characters");
-        System.out.println("\t 2) Starts with a letter");
-        System.out.println("\t 3) Is less than 15 characters");
+        userNameGuidelines();
         System.out.println("Type your username here: ");
         String username = scnr.nextLine();
         while (username == null || Character.isLetter(username.charAt(0)) == false || username.length() < 5 || username.length() > 15) {
             System.out.println("That is not a valid username!");
-            System.out.println("Please provide a username that follows these guidelines: ");
-            System.out.println("\t 1) Has at least 5 characters");
-            System.out.println("\t 2) Starts with a letter");
-            System.out.println("\t 3) Is less than 16 characters");
+            userNameGuidelines();
             System.out.println("Type your username here: ");
             username = scnr.nextLine();
         }
 
         System.out.println("Now let's type in a password!");
-        System.out.println("Make sure your password follows these rules: ");
-        System.out.println("\t 1) Has at least 8 characters");
-        System.out.println("\t 2) Starts with a lettter");
-        System.out.println("\t 3) Has at least one number");
-        System.out.println("\t 4) Is less than 13 characters");
+        passWordGuidelines();
         System.out.println("Type your password here: ");
         String password = scnr.nextLine();
         while (password == null || Character.isLetter(password.charAt(0)) == false || password.length() < 8 || password.length() > 12 || password.matches(".*\\d.*") == false) {
             System.out.println("That is not a valid password!");
-            System.out.println("Make sure your password follows these rules: ");
-            System.out.println("\t 1) Has at least 8 characters");
-            System.out.println("\t 2) Starts with a lettter");
-            System.out.println("\t 3) Has at least one number");
-            System.out.println("\t 4) Is less than 13 characters");
+            passWordGuidelines();
             System.out.println("Type your password here: ");
             password = scnr.nextLine();
         }
