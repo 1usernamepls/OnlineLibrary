@@ -56,6 +56,8 @@ public class BookShop {
         accountDetails();
         System.out.print("Type the number of the option you'd like to change: ");
         int option = s.nextInt();
+        s.nextLine(); // added to consume newline after user integer input 
+
         switch (option) {
             case 1:
                 String e = "e";
