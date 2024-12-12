@@ -62,5 +62,45 @@ public class Customer extends User {
         return orders;
     }
 
+    @Override
+    public String toString() {
+        String s = "";
+        s += "\n";
+        s += "CUSTOMER ACCOUNT DETAILS \n";
+        s += "-----------------------------\n";
+        s += super.toString();
+        s += "Cart Items: \n";
+        if (!(cart.isEmpty()) && cart != null){
+            for (Book book : cart){
+                s += "- " + book.toString() + "\n";
+            }
+        }
+        else {
+            s += "Cart is currently empty \n";
+        }
+        s += "Order History: \n";
+        if (!(orders.isEmpty())){
+            for (Order o : orders){
+                s += o.toString() + "\n";
+            }
+        }
+        else {
+            s += "No orders placed";
+        }
 
+        return s;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Customer)) {
+            return false;
+        }
+        Customer c = (Customer) o;
+        return this.cart.equals(c.cart) &&
+        this.orders.equals(c.orders);
+    }
 }
