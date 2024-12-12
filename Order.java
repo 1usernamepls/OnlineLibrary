@@ -116,9 +116,6 @@ public class Order {
         if (this == o){
             return true;
         }
-        if (this == null){
-            return false;
-        }
         if (!(o instanceof Order)){
             return false;
         }
