@@ -1,6 +1,6 @@
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Order {
@@ -9,10 +9,7 @@ public class Order {
     private String status; 
     private LocalDate date;
     private Customer customer;
-    private LinkedList<Book> items;
-
-    private static LinkedList<Order> completedOrders = new LinkedList<>(); 
-    private static LinkedList<Order> allOrders = new LinkedList<>();
+    private ArrayList<Book> items;
 
     public Order(Customer c){
         customer = c; //get an existing customer on the website for the order
@@ -23,8 +20,7 @@ public class Order {
         Random rand = new Random();
         orderID = rand.nextInt(900000) + 10000; //generates a random 5-digit id
    
-        items = new LinkedList<>();
-        allOrders.add(this);
+        items = new ArrayList<>();
     }
 
     //copy constructor
@@ -35,21 +31,15 @@ public class Order {
         this.date = o.date;
         this.orderID = o.orderID;
 
-        items = new LinkedList<>();
+        items = new ArrayList<>();
         for (Book book : o.items){
             this.items.add(book);
         }
-
-        allOrders.add(this);
-    }
-
-    public Order() {
     }
 
     public void addToOrder(Book book){
         if (book == null){
-            System.out.println("Sorry that book in not available at the shop and cannot be added to the order");
-            return;
+            throw new IllegalArgumentException("Invalid book: Sorry that book is not available at the shop and cannot be added to the order");
         }
         if (book.getStock() > 0){
             items.add(book);
@@ -61,7 +51,7 @@ public class Order {
         }
     }
 
-    public void removeBook(Book book){
+    public void removeBookFromOrder(Book book){
         if (book == null){
             System.out.println("Sorry that book in not available at the shop and cannot be removed from order");
             return;
@@ -79,7 +69,7 @@ public class Order {
         }
     }
 
-    public String updatedStatus(int daysOutFromOrder){
+    public String updatedStatus(){
         LocalDate current = LocalDate.now();
         long daysElapsed = ChronoUnit.DAYS.between(date, current); 
 
@@ -91,7 +81,6 @@ public class Order {
         }
         else {
             status = "Delivered";
-            finishedOrder();
         }
         return status;
     }
@@ -102,20 +91,6 @@ public class Order {
             total += book.getPrice();
         }
         return total;
-    }
-
-    public void finishedOrder() {
-        if (this.status.equals("Delivered")){
-            if (!(completedOrders.contains(this))) {
-                completedOrders.add(this);
-            }
-        }
-    }
-    
-    public static void viewOrderHistory() {
-        for (Order order : completedOrders) {
-            System.out.println(order);
-        }
     }
 
     public String toString(){
@@ -141,11 +116,16 @@ public class Order {
         if (this == o){
             return true;
         }
+        if (this == null){
+            return false;
+        }
         if (!(o instanceof Order)){
             return false;
         }
         Order order = (Order) o;
-        return this.orderID == order.orderID && this.customer.equals(order.customer) && this.total == order.total;
+        return this.orderID == order.orderID && 
+        this.customer.equals(order.customer) && 
+        this.total == order.total;
     }
 
     //accessors 
@@ -157,7 +137,7 @@ public class Order {
         return customer;
     }
 
-    public LinkedList<Book> getOrderItems(){
+    public ArrayList<Book> getOrderItems(){
         return items;
     }
 
@@ -171,14 +151,6 @@ public class Order {
 
     public LocalDate getOrderDate(){
         return date;
-    }
-
-    public static LinkedList<Order> getAllOrders() {
-        return allOrders;
-    }
-
-    public static LinkedList<Order> getFinishedOrders(){
-        return completedOrders;
     }
 
     //mutators
@@ -200,7 +172,7 @@ public class Order {
         customer = c;
     }
 
-    public void setOrderItems(LinkedList<Book> b){
+    public void setOrderItems(ArrayList<Book> b){
         items = b;
     }
 }
