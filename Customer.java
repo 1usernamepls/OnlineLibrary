@@ -69,6 +69,7 @@ public class Customer extends User {
         s += "CUSTOMER ACCOUNT DETAILS \n";
         s += "-----------------------------\n";
         s += super.toString();
+        s += "\n";
         s += "Cart Items: \n";
         if (!(cart.isEmpty()) && cart != null){
             for (Book book : cart){
@@ -85,8 +86,9 @@ public class Customer extends User {
             }
         }
         else {
-            s += "No orders placed";
+            s += "No orders placed\n";
         }
+        s += "---------------------------\n";
 
         return s;
     }
