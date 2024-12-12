@@ -3,7 +3,8 @@ import java.util.List;
 
 public class Administrator extends User {
     protected List<Book> books; // list of books in the store to manage
-
+    protected ArrayList<Order> completedOrders = new ArrayList<>();
+    protected ArrayList<Order> allOrders = new ArrayList<>();
 
     public Administrator(String e, String u, String p, String f, String l){
         super(e, u, p, f, l);
@@ -45,9 +46,38 @@ public class Administrator extends User {
         }
     }
 
-    // GET A LIST OF ALL BOOKS IN THE SHOP
+    // view all past completed orders
+    public void viewOrderHistory(){
+        for (Order order : completedOrders) {
+            System.out.println(order);
+        }
+    }
+    
+    // manually updates the completedOrder list
+    public void addFinishedOrder(Order order) {
+        if (order.getOrderStatus().equals("Delivered")) {
+            if (!completedOrders.contains(order)) {
+                completedOrders.add(order);
+            }
+        }
+    }
+
+    // adds new orders to list to track all orders
+    public void addOrder(Order order) {
+        allOrders.add(order);
+    }
+
+    // accessors 
     public List<Book> getBooks() {
         return this.books;
+    }
+
+    public ArrayList<Order> getCompletedOrders() {
+        return completedOrders;
+    }
+
+    public ArrayList<Order> getAllOrders() {
+        return allOrders;
     }
 
     @Override
@@ -56,11 +86,11 @@ public class Administrator extends User {
         s += "\n";
         s += "ADMINISTRATOR ACCOUNT DETAILS\n";
         s += "-----------------------------\n";
-        s += " Email: " + email + "\n";
-        s += " Username: " + username + "\n";
-        s += "Password: " + password + "\n";
-        s += "First Name: " + firstName + "\n";
-        s += "Last Name: " + lastName + "\n";
+        s += super.toString();
+        // s += ; 
+        // s += ;
+        // s += ;
+        // s += ;
         return s;
     }
 }
