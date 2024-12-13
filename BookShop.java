@@ -206,15 +206,16 @@ public class BookShop {
         s.close();   
     }
 
-    public static void administratorMenu(){
+public static void administratorMenu(){
         System.out.println("1. Review account");
         System.out.println("2. Change account");
         System.out.println("3. Add a book to the shop");
         System.out.println("4. Remove a book from the shop");
         System.out.println("5. Update book stock");
         System.out.println("6. Update book price");
-        System.out.println("7. View order history");
-        System.out.println("8. Logout");
+        System.out.println("7. View shop's completed orders");
+        System.out.println("8. Update completed orders");
+        System.out.println("9. Logout");
     }
 
     public static void createBooksToAdd(Administrator a){
@@ -228,17 +229,22 @@ public class BookShop {
         String language = scnr.nextLine();
         System.out.print("Year Published: ");
         int year = scnr.nextInt();
+        scnr.nextLine();
         System.out.print("Price: ");
         double price = scnr.nextDouble();
+        scnr.nextLine();
         System.out.print("Availability (enter 'true' or 'false'): ");
         boolean availability = scnr.nextBoolean();
+        scnr.nextLine();
         System.out.print("Stock: ");
         int stock = scnr.nextInt();
+        scnr.nextLine();
         System.out.println("Is the book Fiction or Nonfiction?");
         String bookType = scnr.nextLine();
         if (bookType.equalsIgnoreCase("Fiction")){
             System.out.print("Is it a bestseller (enter 'true' or 'false'): ");
             boolean bSeller = scnr.nextBoolean();
+            scnr.nextLine();
             System.out.print("Book Genre: ");
             String genre = scnr.nextLine();
             System.out.print("Target age of readers: ");
@@ -532,27 +538,45 @@ public class BookShop {
 
             switch (choice) {
                 case 1:
+                    System.out.println("----------REVIEW ACCOUNT----------");
+                    System.out.println();
                     checkAccount(a);
                     break;
                 case 2:
+                    System.out.println("----------CHANGE ACCOUNT----------");
+                    System.out.println();
                     changeAccount(a);
                     break;
                 case 3:
+                    System.out.println("----------ADD A BOOK TO THE SHOP----------");
+                    System.out.println();
                     createBooksToAdd(a);
                     break;
                 case 4:
+                    System.out.println("----------REMOVE A BOOK FROM THE SHOP----------");
+                    System.out.println();
                     removeBookFromStore(a);
                     break;
                 case 5:
+                    System.out.println("----------UPDATE BOOK STOCK----------");
+                    System.out.println();
                     updateStock(a);
                     break;
                 case 6:
+                    System.out.println("----------UPDATE BOOK PRICES----------");
+                    System.out.println();
                     updatePrice(a);
                     break;
                 case 7:
+                    System.out.println("----------VIEW SHOP'S COMPLETED ORDERS----------");
+                    System.out.println();
                     a.viewOrderHistory();
                     break;
                 case 8:
+                    System.out.println("----------UPDATE COMPLETED ORDERS----------");
+                    System.out.println();
+                    a.addFinishedOrder();
+                case 9:
                     shop.logout();
                     break;
                 default:
