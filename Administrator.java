@@ -46,6 +46,16 @@ public class Administrator extends User {
         }
     }
 
+    // find books in the store based on their title
+    public Book findBookByTitle(String title) {
+        for (Book book : books) {
+            if (book.getTitle().equals(title)) { 
+                return book;
+            }
+        }
+        return null; 
+    }    
+
     // view all past completed orders
     public void viewOrderHistory(){
         for (Order order : completedOrders) {
