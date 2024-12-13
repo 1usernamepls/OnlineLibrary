@@ -152,6 +152,7 @@ public class BookShop {
         c.addToCart(ll.get(bookNum));
         s.close();
     }
+
     public static void removeCart(LinkedList<Book> ll, Customer c) {
         Scanner s = new Scanner(System.in);
         System.out.println("Ok. Type the number of the book you'd like to remove here: ");
@@ -227,29 +228,23 @@ public class BookShop {
         String language = scnr.nextLine();
         System.out.print("Year Published: ");
         int year = scnr.nextInt();
-        scnr.nextLine();
         System.out.print("Price: ");
         double price = scnr.nextDouble();
-        scnr.nextLine();
         System.out.print("Availability (enter 'true' or 'false'): ");
         boolean availability = scnr.nextBoolean();
-        scnr.nextLine();
         System.out.print("Stock: ");
         int stock = scnr.nextInt();
-        scnr.nextLine();
-        System.out.print("Book Category: ");
-        String category = scnr.nextLine();
         System.out.println("Is the book Fiction or Nonfiction?");
         String bookType = scnr.nextLine();
         if (bookType.equalsIgnoreCase("Fiction")){
             System.out.print("Is it a bestseller (enter 'true' or 'false'): ");
             boolean bSeller = scnr.nextBoolean();
-            scnr.nextLine();
             System.out.print("Book Genre: ");
             String genre = scnr.nextLine();
             System.out.print("Target age of readers: ");
             String age = scnr.nextLine();
-            Fiction newBook = new Fiction(title, author, language, year, price, availability, stock, category, bSeller, genre, age);
+            Fiction newBook = new Fiction(title, author, language, year, price, availability, stock, genre, bSeller, age);
+            a.addBook(newBook);
         }
         else if (bookType.equalsIgnoreCase("Nonfiction")){
             System.out.print("Book Genre: ");
@@ -262,9 +257,10 @@ public class BookShop {
             scnr.nextLine();
             System.out.print("Book Topic: ");
             String topic = scnr.nextLine();
-            Nonfiction newBook = new Nonfiction(title, author, language, year, price, availability, stock, category, genre, edition, reviewed, topic);
+            Nonfiction newBook = new Nonfiction(title, author, language, year, price, availability, stock, genre, edition, reviewed, topic);
+            a.addBook(newBook);
         }
-        a.addBook(newBook);
+        scnr.close();
     }
 
     public static void removeBookFromStore(Administrator a){
@@ -278,6 +274,7 @@ public class BookShop {
         else {
             System.out.println("Book could not be found.");
         }
+        scnr.close();
     }
 
     public static void updateStock(Administrator a){
@@ -294,6 +291,7 @@ public class BookShop {
         else {
             System.out.println("Book could not be found.");
         }
+        scnr.close();
     }
 
     public static void updatePrice(Administrator a){
@@ -310,6 +308,7 @@ public class BookShop {
         else {
             System.out.println("Book could not be found.");
         }
+        scnr.close();
     }
 
     public void logout() {
