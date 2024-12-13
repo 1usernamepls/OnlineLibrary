@@ -398,6 +398,7 @@ public class BookShop {
 
         if (user.equals("customer")) {
             Customer c = new Customer(email, username, password, firstName, lastName);
+            shop.currentUser = c; //assign currentUser as the customer
             shop.saveUser(c); //save customer to user database
             System.out.println(c);
             System.out.println(); 
@@ -520,6 +521,7 @@ public class BookShop {
 
         if (user.equals("administrator")) {
             Administrator a = new Administrator(email, username, password, firstName, lastName);
+            shop.currentUser = a;
             shop.saveUser(a); // save administrator to user database
             System.out.println(a);
             System.out.println("Congrats! Your account has been successfully created.");
