@@ -71,7 +71,7 @@ public class BookShop {
             case 2:
                 userNameGuidelines();
                 String user = "user";
-                while (user.length() < 5 || user.length() > 15) {
+                while (user.length() < 5 || user.length() > 15 || Character.isLetter(user.charAt(0)) == false) {
                     System.out.println("Type your new username here: ");
                     user = s.nextLine();
                 } 
@@ -81,7 +81,7 @@ public class BookShop {
             case 3:
                 passWordGuidelines();
                 String p = "p";
-                while (p.length() < 8 || p.length() > 12 || p.matches(".*\\d.*") == false) {
+                while (p.length() < 8 || p.length() > 12 || p.matches(".*\\d.*") == false || Character.isLetter(p.charAt(0)) == false) {
                     System.out.println("Type your new password here: ");
                     p = s.nextLine();
                 }
@@ -95,29 +95,28 @@ public class BookShop {
         s.close();
     }
 
-    public static void defaultBooks() {
-        LinkedList<Book> books = new LinkedList<>();
+    public static void defaultBooks(LinkedList<Book> ll) {
         Fiction f1 = new Fiction("Harry Potter And The Sourcerer's Stone", "J.K. Rowling", "English",
         1997, 6.99, true, 5, "FANTASY", true, "8+");
-        books.add(f1);
+        ll.add(f1);
         Fiction f2 = new Fiction("IT", "Stephen King", "English", 
         1986, 14.17, true, 3, "HORROR", true, "12+");
-        books.add(f2);
+        ll.add(f2);
         Fiction f3 = new Fiction("The Great Gatsby", "F. Scott Fitzgerald", "English",
         1925, 8.31, true, 7, "DRAMA", true, "14+");
-        books.add(f3);
+        ll.add(f3);
         Nonfiction nf1 = new Nonfiction("What We Carry", "Maya Shanbhag Lang", "English", 
         2020, 14.81, true, 8, "MEMOIR", 1, false, "DISABILITY");
-        books.add(nf1);
+        ll.add(nf1);
         Nonfiction nf2 = new Nonfiction("Guiness World Records 2025", "GUINESS WORLD RECORDS", "English",
         2024, 13.98, true, 2, "ALMANAC", 1, false, "WORLD RECORDS");
-        books.add(nf2);
+        ll.add(nf2);
         Nonfiction nf3 = new Nonfiction("USA National Parks: Lands of Wonder", "Dk Travel", "English",
         2024, 18.57, true, 3, "TRAVEL BOOKS", 2, true, "NATIONAL PARKS");
-        books.add(nf3);
-        Collections.sort(books);
+        ll.add(nf3);
+        Collections.sort(ll);
         int line = 0;
-        for (Book b : books) {
+        for (Book b : ll) {
             System.out.println(++line);
             System.out.println();
             System.out.println(b);
@@ -129,7 +128,7 @@ public class BookShop {
             pw.println("ALL BOOKS IN BOOKSHOP");
             pw.println("---------------------");
             pw.println();
-            for (Book b : books) {
+            for (Book b : ll) {
                 pw.println(++ln);
                 pw.println(b);
                 pw.println();
@@ -140,6 +139,69 @@ public class BookShop {
             System.err.println("Something went wrong when writing to the file!");
             ioe.printStackTrace();
         }
+    }
+    
+    public static void addCart(LinkedList<Book> ll, Customer c) {
+        Scanner s = new Scanner(System.in);
+        System.out.println("What book would you like to add?");
+        System.out.print("Enter the number of the book you want here: ");
+        int bookNum = s.nextInt();
+        bookNum -= 1;
+        c.addToCart(ll.get(bookNum));
+        s.close();
+    }
+
+    public static void removeCart(LinkedList<Book> ll, Customer c) {
+        Scanner s = new Scanner(System.in);
+        System.out.println("Ok. Type the number of the book you'd like to remove here: ");
+        int removedBook = s.nextInt();
+        removedBook -= 1;
+        c.removeFromCart(ll.get(removedBook));
+        s.close();
+    }
+    
+    public static void moreOptions(LinkedList<Book> ll, Customer c) {
+        Scanner s = new Scanner (System.in);
+        System.out.println("Now that your cart has books, there are several options you can choose from...");
+        System.out.println("\t1) Adding Books");
+        System.out.println("\t2) Removing Books");
+        System.out.println("\t3) Clearing Your Cart");
+        System.out.println("What would you like to do?");
+        System.out.print("Type in your number option here: ");
+        int option = s.nextInt();
+        switch (option) {
+            case 1:
+                System.out.println("Let's add to your cart!");
+                String add = "add";
+                while (add.equals("add")) {
+                    addCart(ll, c);
+                    System.out.println();
+                    System.out.println("Book added!");
+                    System.out.println("Any other books you'd like to add?");
+                    System.out.print("Type 'add' if yes, anything else if no: ");
+                    add = s.nextLine();    
+                }
+                break;
+            case 2:
+                System.out.println("Let's remove books from your cart!");
+                String remove = "remove";
+                while (remove.equals("remove") && c.getCart().size() > 0) {
+                    removeCart(c.getCart(), c);
+                    System.out.println();
+                    System.out.println("Book removed!");
+                    System.out.println("Other books you'd like to remove?");
+                    System.out.println("Type 'remove' if yes, anything else if no: ");
+                    remove = s.nextLine();
+                }
+                break;
+            case 3:
+                System.out.println("Let's clear your cart!");
+                c.clearCart();
+                break;
+            default:
+                System.out.println("Invalid Input :(");
+        }
+        s.close();   
     }
     public static void main(String[] args) {
 
@@ -212,19 +274,117 @@ public class BookShop {
                     changeAccount(c);
                 }
             }
+            LinkedList<Book> books = new LinkedList<>();
+            System.out.println("ALL BOOKS IN BOOKSHOP");
+            System.out.println("---------------------");
             System.out.println();
+            defaultBooks(books);
             System.out.println("Let's continue!");
+            System.out.println("Above is a list of books we have at the current moment!");
             System.out.println();
-            System.out.println("Here's the list of books we have at the current moment!");
-            System.out.println();
-            defaultBooks();
-            System.out.println("To see list in full, view the file we've deposited to your account on the side.");
+            System.out.println("To view the list in full, see the file we've deposited to your account on the side of this interface.");
+            
+            System.out.println("Would you like to do anything else today?");
+            System.out.print("Type 'yes' or 'no' : ");
+            String decision2 = scnr.nextLine();
+            if (decision2.equals("yes")) {
+                System.out.println("Alright then :)");
+                System.out.println("On our website, you can interact with books in 2 ways: ");
+                System.out.println("\t1) Adding Books To Your Cart");
+                System.out.println("\t2) Purchasing And Ordering Books Directly");
+                System.out.println("Which one would you like to do?");
+                System.out.println("Type 'add' or 'purchase' here : ");
+                String action2 = scnr.nextLine();
+                if (action2.equals("add")) {
+                    System.out.println("Would you like to continue in 'add' mode?");
+                    System.out.println("Type 'yes' or 'no' : ");
+                    String addMode = scnr.nextLine();
+                    while (addMode.equals("yes")) {
+                        if (c.getCart().size() == 0) {
+                            System.out.println("Let's add to your cart!");
+                            String add = "add";
+                            while (add.equals("add")) {
+                                addCart(books, c);
+                                System.out.println();
+                                System.out.println("Book added!");
+                                System.out.println("Any other books you'd like to add?");
+                                System.out.print("Type 'add' if yes, anything else if no: ");
+                                add = scnr.nextLine();
+                            }        
+                        }
+                        else if (c.getCart().size() > 0) {
+                            moreOptions(books, c);
+                        }
+                        System.out.println("Edit Success!");
+                        System.out.println("Here's what your cart looks like...");
+                        System.out.println();
+                        int ln = 0;
+                        for (Book b : c.getCart()) {
+                            System.out.println(++ln);
+                            System.out.println();
+                            System.out.println(b);
+                            System.out.println();
+                        }
+                        System.out.println("Any second thoughts about editing your cart before purchase?");
+                        System.out.println("Type 'yes' or 'no' : ");
+                        addMode = scnr.nextLine();
+                    }
+                }
+                System.out.println("Would you like to continue purchasing?");
+                System.out.print("Type 'yes' or 'no' : ");
+                String action3 = scnr.nextLine();
+                if (action3.equals("yes")) {
+                    if (c.getCart().size() > 0) {
+                        System.out.println("Below is a simulated order of the books you'd like to pay for...");
+                        Order o = new Order(c);
+                        for (Book b : c.getCart()) {
+                            o.addToOrder(b);
+                        }
+                        System.out.println();
+                        System.out.println(o);
+                        System.out.println("Would you like to PAY for this order or CANCEL?");
+                        System.out.print("Type 'pay' or 'cancel' here: ");
+                        String finalDecision = scnr.nextLine();
+                        if (finalDecision.equals("pay")) {
+                            System.out.println("CONGRADULATIONS!!!! Your Order has been placed!");
+                        }
+                    }
+                    else {
+                        Order o2 = new Order(c);
+                        String addBook = "add";
+                        while (addBook.equals("add")) {
+                            System.out.println("Agreed :> What book would you like to purchase in your order?");
+                            System.out.print("Type the number of the book you want here: ");
+                            int bNum = scnr.nextInt();
+                            bNum -= 1;
+                            o2.addToOrder(books.get(bNum));
+                            System.out.println();
+                            System.out.println("Below is a simulated order of the books you'd like to pay for...");
+                            System.out.println();
+                            System.out.println(o2);
+                            System.out.println();
+                            System.out.println("Would you like to add another book or purchase?");
+                            System.out.println("Type 'add' or 'purchase' here : ");
+                            addBook = scnr.nextLine();
+                        }
+                        System.out.println("Would you like to PAY for this order or CANCEL?");
+                        System.out.print("Type 'pay' or 'cancel' here: ");
+                        String finalDecision2 = scnr.nextLine();
+                        if (finalDecision2.equals("pay")) {
+                            System.out.println("CONGRADULATIONS!!!! Your Order has been placed!");
+                            System.out.println("Have a great day!");
+                        }
+                    }
+                }
+            }
         }
         if (user.equals("administrator")) {
             Administrator a = new Administrator(email, username, password, firstName, lastName);
             System.out.println(a);
             System.out.println("Congrats! Your account has been successfully created. Anything you'd like to 'check' or 'change' before we move on?");
         }
+
+        System.out.println("Thank you! Goodbye! :>");
 
         scnr.close();
 
