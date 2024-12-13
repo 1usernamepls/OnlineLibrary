@@ -1,10 +1,12 @@
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
 public class BookShop {
+    private User currentUser;
+    private HashMap<String, User> savedUsers = new HashMap<>();
 
     public static void userNameGuidelines() {
-        System.out.println("Please provide a username that follows these guidelines: ");
+        System.out.println("Please create a username that follows these guidelines: "); 
         System.out.println("\t 1) Has at least 5 characters");
         System.out.println("\t 2) Starts with a letter");
         System.out.println("\t 3) Is less than 16 characters");
@@ -56,7 +58,7 @@ public class BookShop {
         accountDetails();
         System.out.print("Type the number of the option you'd like to change: ");
         int option = s.nextInt();
-        s.nextLine(); // added to consume newline after user integer input 
+        s.nextLine(); 
 
         switch (option) {
             case 1:
@@ -66,7 +68,7 @@ public class BookShop {
                     e = s.nextLine();
                 }
                 u.setEmail(e);
-                System.out.println("Change success!");
+                System.out.println("Change made successfully!"); //changed wording
                 break;
             case 2:
                 userNameGuidelines();
@@ -76,7 +78,7 @@ public class BookShop {
                     user = s.nextLine();
                 } 
                 u.setUsername(user); 
-                System.out.println("Change success!");              
+                System.out.println("Change made successfully!"); //changed wording              
                 break;
             case 3:
                 passWordGuidelines();
@@ -86,7 +88,7 @@ public class BookShop {
                     p = s.nextLine();
                 }
                 u.setPassword(p);
-                System.out.println("Change success!");              
+                System.out.println("Change made successfully!"); //changed wording             
                 break;
             default:
                 System.out.println("Invalid Input :(");
@@ -120,7 +122,6 @@ public class BookShop {
             System.out.println(++line);
             System.out.println();
             System.out.println(b);
-            System.out.println();
         }
         try {
             int ln = 0;
@@ -140,7 +141,8 @@ public class BookShop {
             ioe.printStackTrace();
         }
     }
-    
+
+      
     public static void addCart(LinkedList<Book> ll, Customer c) {
         Scanner s = new Scanner(System.in);
         System.out.println("What book would you like to add?");
@@ -150,7 +152,6 @@ public class BookShop {
         c.addToCart(ll.get(bookNum));
         s.close();
     }
-
     public static void removeCart(LinkedList<Book> ll, Customer c) {
         Scanner s = new Scanner(System.in);
         System.out.println("Ok. Type the number of the book you'd like to remove here: ");
@@ -203,29 +204,164 @@ public class BookShop {
         }
         s.close();   
     }
-    public static void main(String[] args) {
 
+    public static void administratorMenu(){
+        System.out.println("1. Review account");
+        System.out.println("2. Change account");
+        System.out.println("3. Add a book to the shop");
+        System.out.println("4. Remove a book from the shop");
+        System.out.println("5. Update book stock");
+        System.out.println("6. Update book price");
+        System.out.println("7. View order history");
+        System.out.println("8. Logout");
+    }
+
+    public static void createBooksToAdd(Administrator a){
+        Scanner scnr = new Scanner(System.in);
+        System.out.println("Enter the information of the book to add: ");
+        System.out.print("Title: ");
+        String title = scnr.nextLine();
+        System.out.print("Author: ");
+        String author = scnr.nextLine();
+        System.out.print("Language: ");
+        String language = scnr.nextLine();
+        System.out.print("Year Published: ");
+        int year = scnr.nextInt();
+        scnr.nextLine();
+        System.out.print("Price: ");
+        double price = scnr.nextDouble();
+        scnr.nextLine();
+        System.out.print("Availability (enter 'true' or 'false'): ");
+        boolean availability = scnr.nextBoolean();
+        scnr.nextLine();
+        System.out.print("Stock: ");
+        int stock = scnr.nextInt();
+        scnr.nextLine();
+        System.out.print("Book Category: ");
+        String category = scnr.nextLine();
+        System.out.println("Is the book Fiction or Nonfiction?");
+        String bookType = scnr.nextLine();
+        if (bookType.equalsIgnoreCase("Fiction")){
+            System.out.print("Is it a bestseller (enter 'true' or 'false'): ");
+            boolean bSeller = scnr.nextBoolean();
+            scnr.nextLine();
+            System.out.print("Book Genre: ");
+            String genre = scnr.nextLine();
+            System.out.print("Target age of readers: ");
+            String age = scnr.nextLine();
+            Fiction newBook = new Fiction(title, author, language, year, price, availability, stock, category, bSeller, genre, age);
+        }
+        else if (bookType.equalsIgnoreCase("Nonfiction")){
+            System.out.print("Book Genre: ");
+            String genre = scnr.nextLine();
+            System.out.print("Edition: ");
+            int edition = scnr.nextInt();
+            scnr.nextLine();
+            System.out.print("Peer Reviewed (enter 'true' or 'false'): ");
+            boolean reviewed = scnr.nextBoolean();
+            scnr.nextLine();
+            System.out.print("Book Topic: ");
+            String topic = scnr.nextLine();
+            Nonfiction newBook = new Nonfiction(title, author, language, year, price, availability, stock, category, genre, edition, reviewed, topic);
+        }
+        a.addBook(newBook);
+    }
+
+    public static void removeBookFromStore(Administrator a){
+        Scanner scnr = new Scanner(System.in);
+        System.out.print("Enter book title to remove: ");
+        String bookToRemove = scnr.nextLine();
+        Book book = a.findBookByTitle(bookToRemove); 
+        if (book != null) {
+            a.removeBook(book);
+        } 
+        else {
+            System.out.println("Book could not be found.");
+        }
+    }
+
+    public static void updateStock(Administrator a){
+        Scanner scnr = new Scanner(System.in);
+        System.out.print("Enter book title to update stock: ");
+        String stockTitle = scnr.nextLine();
+        Book stockBook = a.findBookByTitle(stockTitle);
+        if (stockBook != null) {
+            System.out.print("Enter new stock amount: ");
+            int newStock = scnr.nextInt();
+            scnr.nextLine();
+            a.updateBookStock(stockBook, newStock);
+        } 
+        else {
+            System.out.println("Book could not be found.");
+        }
+    }
+
+    public static void updatePrice(Administrator a){
+        Scanner scnr = new Scanner(System.in);
+        System.out.print("Enter book title to update price: ");
+        String bookToPrice = scnr.nextLine();
+        Book priceBook = a.findBookByTitle(bookToPrice);
+        if (priceBook != null) {
+            System.out.print("Enter new price: ");
+            double newPrice = scnr.nextDouble();
+            scnr.nextLine();
+            a.updateBookPrice(priceBook, newPrice);
+        } 
+        else {
+            System.out.println("Book could not be found.");
+        }
+    }
+
+    public void logout() {
+        if (currentUser != null) { //if someone is currently logged in
+            if (!savedUsers.containsKey(currentUser.getEmail())) { //current user is not saved in user database
+                savedUsers.put(currentUser.getEmail(), currentUser); //add to current saved user database 
+            }
+            System.out.println(currentUser.getUsername() + " has been logged out."); 
+            currentUser = null; // logout current user
+        } 
+        else {
+            System.out.println("No user is currently logged in.");
+        }
+    }
+
+    public void saveUser(User user) {
+        if (!savedUsers.containsKey(user.getEmail())) {
+            savedUsers.put(user.getEmail(), user);
+            System.out.println(user.getUsername() + " has been registered in the system.");
+        } else {
+            System.out.println("A user with this email already exists.");
+        }
+    }
+
+    public static void main(String[] args) {
+        // create instance of BookShop class so it can interact with non-static fields and methods
+        BookShop shop = new BookShop(); //suggested by ChatGPT
         Scanner scnr = new Scanner(System.in);
 
         System.out.println("Hello There First Time User! It's my pleasure to welcome you to our ONLINE BOOKSHOP!");
         System.out.println("My name is Doti! I'm the system's bot who will help you on this exciting journey! :>");
+        System.out.println(); 
         System.out.println("First let's get you set up with an account...");
 
         System.out.println("Some personal information we need to know: ");
         System.out.println("What is your email? : ");
         String email = scnr.nextLine();
         while (email.contains("@") == false || email.contains(".") == false || Character.isLetter(email.charAt(0)) == false) {
-            System.out.println("That is not an email!");
+            System.out.println("That is not a valid email!"); 
             System.out.println("What is your email? : ");
             email = scnr.nextLine();
         }
+        System.out.println(); 
 
         System.out.println("Perfect!");
         System.out.println("Now what is your first name? : ");
         String firstName = scnr.nextLine();
+        System.out.println(); 
 
         System.out.println("Last name? : ");
         String lastName = scnr.nextLine();
+        System.out.println(); 
 
         System.out.println("Nice! Moving on, what username would you like to have with us?");
         userNameGuidelines();
@@ -237,6 +373,7 @@ public class BookShop {
             System.out.println("Type your username here: ");
             username = scnr.nextLine();
         }
+        System.out.println(); 
 
         System.out.println("Now let's type in a password!");
         passWordGuidelines();
@@ -248,6 +385,7 @@ public class BookShop {
             System.out.println("Type your password here: ");
             password = scnr.nextLine();
         }
+        System.out.println(); 
 
         System.out.println("Finally, most important, do you identify as a 'customer' or an 'administrator'? : ");
         String user = scnr.nextLine();
@@ -260,14 +398,16 @@ public class BookShop {
 
         if (user.equals("customer")) {
             Customer c = new Customer(email, username, password, firstName, lastName);
+            shop.saveUser(c); //save customer to user database
             System.out.println(c);
-            System.out.println("Congrats! Your account has been successfully created. Anything you'd like to check or change before we move on?");
+            System.out.println(); 
+            System.out.println("Congrats! Your account has been successfully created. Anything you'd like to review or change before we move on?"); //changed 'check' to 'review'
             System.out.print("Type 'yes' or 'no' : ");
             String decision = scnr.nextLine();
             if (decision.equals("yes")) {
-                System.out.println("Alrighty! Would you like to 'check' or 'change' something in your account? : ");
+                System.out.println("Alrighty! Would you like to 'review' or 'change' something in your account? : "); //changed 'check' to 'review'
                 String action = scnr.nextLine();
-                if (action.equals("check")) {
+                if (action.equals("review")) { //changed
                     checkAccount(c);
                 }
                 if (action.equals("change")) {
@@ -281,9 +421,8 @@ public class BookShop {
             defaultBooks(books);
             System.out.println("Let's continue!");
             System.out.println("Above is a list of books we have at the current moment!");
-            System.out.println();
             System.out.println("To view the list in full, see the file we've deposited to your account on the side of this interface.");
-            
+
             System.out.println("Would you like to do anything else today?");
             System.out.print("Type 'yes' or 'no' : ");
             String decision2 = scnr.nextLine();
@@ -378,16 +517,53 @@ public class BookShop {
                 }
             }
         }
+
         if (user.equals("administrator")) {
             Administrator a = new Administrator(email, username, password, firstName, lastName);
+            shop.saveUser(a); // save administrator to user database
             System.out.println(a);
-            System.out.println("Congrats! Your account has been successfully created. Anything you'd like to 'check' or 'change' before we move on?");
+            System.out.println("Congrats! Your account has been successfully created.");
+            System.out.println("What would you like to do?");
+            administratorMenu();
+            System.out.print("Type the number of the option you'd like to choose: ");
+            int choice = scnr.nextInt();
+            scnr.nextLine();
+
+            switch (choice) {
+                case 1:
+                    checkAccount(a);
+                    break;
+                case 2:
+                    changeAccount(a);
+                    break;
+                case 3:
+                    createBooksToAdd(a);
+                    break;
+                case 4:
+                    removeBookFromStore(a);
+                    break;
+                case 5:
+                    updateStock(a);
+                    break;
+                case 6:
+                    updatePrice(a);
+                    break;
+                case 7:
+                    a.viewOrderHistory();
+                    break;
+                case 8:
+                    shop.logout();
+                    break;
+                default:
+                    System.out.println("Invalid option! Please try again.");
+                    System.out.println();
+                    administratorMenu();
+                    System.out.print("Type the number of the option you'd like to choose: ");
+                    choice = scnr.nextInt();
+                    scnr.nextLine();
+            }
         }
-
         System.out.println("Thank you! Goodbye! :>");
-
         scnr.close();
-
     }
-    
 }
