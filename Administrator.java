@@ -63,11 +63,13 @@ public class Administrator extends User {
         }
     }
     
-    // manually updates the completedOrder list
-    public void addFinishedOrder(Order order) {
-        if (order.getOrderStatus().equals("Delivered")) {
-            if (!completedOrders.contains(order)) {
-                completedOrders.add(order);
+   //updates the completedOrder list
+    public void addFinishedOrder(){
+        for (Order order : allOrders){
+            if (order.getOrderStatus().equals("Delivered")) {
+                if (!completedOrders.contains(order)) {
+                    completedOrders.add(order);
+                }
             }
         }
     }
