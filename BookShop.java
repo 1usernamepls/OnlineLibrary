@@ -396,7 +396,7 @@ public class BookShop {
             user = scnr.nextLine();
         }
 
-        if (user.equals("customer")) {
+        if (user.equalsIgnoreCase("customer")) {
             Customer c = new Customer(email, username, password, firstName, lastName);
             shop.currentUser = c; //assign currentUser as the customer
             shop.saveUser(c); //save customer to user database
@@ -519,7 +519,7 @@ public class BookShop {
             }
         }
 
-        if (user.equals("administrator")) {
+        if (user.equalsIgnoreCase("administrator")) {
             Administrator a = new Administrator(email, username, password, firstName, lastName);
             shop.currentUser = a;
             shop.saveUser(a); // save administrator to user database
