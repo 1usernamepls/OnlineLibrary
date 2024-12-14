@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public abstract class User { // a public abstract class for BookShop User accounts
     
     protected String email;
@@ -71,6 +73,100 @@ public abstract class User { // a public abstract class for BookShop User accoun
         password = p;
     }
 
+    public void userNameGuidelines() {
+        System.out.println("Please create a username that follows these guidelines: "); 
+        System.out.println("\t 1) Has at least 5 characters");
+        System.out.println("\t 2) Starts with a letter");
+        System.out.println("\t 3) Is less than 16 characters");
+    }
+
+    public void passWordGuidelines() {
+        System.out.println("Make sure your password follows these rules: ");
+        System.out.println("\t 1) Has at least 8 characters");
+        System.out.println("\t 2) Starts with a lettter");
+        System.out.println("\t 3) Has at least one number");
+        System.out.println("\t 4) Is less than 13 characters");
+    }
+
+    public void accountDetails() {
+        System.out.println("\t1) Email");
+        System.out.println("\t2) Username");
+        System.out.println("\t3) Password");
+    }
+
+        public void checkAccount() {
+            Scanner s = new Scanner(System.in);
+            System.out.println("What part of your account would you like to check?");
+            accountDetails();
+            System.out.println("\t4) Name");
+            System.out.print("Type the number of the option you'd like to see: ");
+            int option = s.nextInt();
+            switch (option) {
+                case 1:
+                    System.out.println("Your Email Is: " + email);
+                    break;
+                case 2:
+                    System.out.println("Your Username Is: " + username);
+                    break;
+                case 3:
+                    System.out.println("Your Password Is: " + password);
+                    break;
+                case 4:
+                    System.out.println("Your Name Is: " + lastName + ", " + firstName);
+                    break;
+                default:
+                    System.out.println("Invalid Input :(");
+            }
+            s.close();
+        }
+
+        public void changeAccount() {
+            Scanner s = new Scanner(System.in);
+            System.out.println("What part of your account would you like to change?");
+            accountDetails();
+            System.out.print("Type the number of the option you'd like to change: ");
+            int option = s.nextInt();
+            s.nextLine(); 
+    
+            switch (option) {
+                case 1:
+                    String e = "e";
+                    while (e.contains("@") == false || e.contains(".") == false || Character.isLetter(e.charAt(0)) == false) {
+                        System.out.println("What will your new email be? : ");
+                        e = s.nextLine();
+                    }
+                    setEmail(e);
+                    System.out.println("Change made successfully!"); //changed wording
+                    break;
+                case 2:
+                    userNameGuidelines();
+                    String user = "user";
+                    while (user.length() < 5 || user.length() > 15 || Character.isLetter(user.charAt(0)) == false) {
+                        System.out.println("Type your new username here: ");
+                        user = s.nextLine();
+                    } 
+                    setUsername(user); 
+                    System.out.println("Change made successfully!"); //changed wording              
+                    break;
+                case 3:
+                    passWordGuidelines();
+                    String p = "p";
+                    while (p.length() < 8 || p.length() > 12 || p.matches(".*\\d.*") == false || Character.isLetter(p.charAt(0)) == false) {
+                        System.out.println("Type your new password here: ");
+                        p = s.nextLine();
+                    }
+                    setPassword(p);
+                    System.out.println("Change made successfully!"); //changed wording             
+                    break;
+                default:
+                    System.out.println("Invalid Input :(");
+            }
+            toString();
+            s.close();
+        }
+    
+
+
     @Override // for child classes Customer and Administrator
     public String toString() { // toString() prints details shared by all Users
         String s = "";
@@ -84,10 +180,10 @@ public abstract class User { // a public abstract class for BookShop User accoun
     @Override // for child classes Customer and Administrator
     public boolean equals(Object o) { // compares User objects and returns if they are equal or not
         if (this == o) { // if both objects have the same memory address
-            return true; // they are the same
+            return true; // they are equal
         }
         if (!(o instanceof User)) { // if one object is not a User object
-            return false; // they are not the same
+            return false; // they are not equal
         }
         User u = (User) o; // typecast
         return (this.email.equals(u.email) && 
