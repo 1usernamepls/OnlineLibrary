@@ -1,14 +1,14 @@
 import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedList;
 
 public class Administrator extends User {
-    protected List<Book> books; // list of books in the store to manage
+    protected LinkedList<Book> books; // list of books in the store to manage
     protected ArrayList<Order> completedOrders = new ArrayList<>();
     protected ArrayList<Order> allOrders = new ArrayList<>();
 
     public Administrator(String e, String u, String p, String f, String l){
         super(e, u, p, f, l);
-        books = new ArrayList<>();
+        books = new LinkedList<>();
     }
 
     // ADD NEW BOOK TO THE SHOP
@@ -80,7 +80,7 @@ public class Administrator extends User {
     }
 
     // accessors 
-    public List<Book> getBooks() {
+    public LinkedList<Book> getBooks() {
         return this.books;
     }
 
