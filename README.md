@@ -22,3 +22,7 @@ SOURCES
      https://stackoverflow.com/questions/27005861/calculate-days-between-two-dates-in-java-8
 - ChatGPT was used to get the main method in the BookShop class to interact with non-static methods
      this was the prompt entered: "these lines 'saveUser(c);' and 'logout();' are being marked as errors in vs code in my main method, any idea why?"
+- Did some research on Scanner objects to see how we could implement them more neatly
+     https://stackoverflow.com/questions/65503259/should-a-scanner-only-be-instantiated-only-once-if-thats-the-case-why-so
+     https://www.theserverside.com/blog/Coffee-Talk-Java-News-Stories-and-Opinions/Java-Scanner-User-Input-example-String-next-int-long-char
+     https://www.geeksforgeeks.org/passing-scanner-object-as-a-parameter-in-java/
