@@ -1,4 +1,5 @@
 import java.util.LinkedList;
+import java.util.Scanner;
 
 public class Customer extends User {
     protected LinkedList<Book> cart;
@@ -13,7 +14,8 @@ public class Customer extends User {
     public void addToCart(Book book){
         if (book.getStock() > 0){
             cart.add(book);
-            System.out.println(book.getTitle() + " has been added to your cart");
+            System.out.println(book.getTitle() + " has been added to your cart!");
+            book.setStock(book.getStock() - 1);
         }
         else {
             System.out.println("Sorry, " + book.getTitle() + " is not available to add to cart");
@@ -24,6 +26,7 @@ public class Customer extends User {
         if (cart.contains(book)){
             cart.remove(book);
             System.out.println(book.getTitle() + " has been removed from your cart");
+            book.setStock(book.getStock() + 1);
         }
         else {
             System.out.println(book.getTitle() + " was not in your cart so it was not removed");
@@ -62,12 +65,76 @@ public class Customer extends User {
         return orders;
     }
 
+    public void addCart(LinkedList<Book> ll) {
+        Scanner s = new Scanner(System.in);
+        System.out.println("What book would you like to add?");
+        System.out.print("Enter the number of the book you want here: ");
+        int bookNum = s.nextInt();
+        bookNum -= 1;
+        addToCart(ll.get(bookNum));
+        s.close();
+    }
+
+    public void removeCart(LinkedList<Book> ll) {
+        Scanner s = new Scanner(System.in);
+        System.out.println("Ok. Type the number of the book you'd like to remove here: ");
+        int removedBook = s.nextInt();
+        removedBook -= 1;
+        removeFromCart(ll.get(removedBook));
+        s.close();
+    }
+
+    public void moreOptions(LinkedList<Book> ll) {
+        Scanner s = new Scanner (System.in);
+        System.out.println("Now that your cart has books, there are several options you can choose from...");
+        System.out.println("\t1) Adding Books");
+        System.out.println("\t2) Removing Books");
+        System.out.println("\t3) Clearing Your Cart");
+        System.out.println("What would you like to do?");
+        System.out.print("Type in your number option here: ");
+        int option = s.nextInt();
+        switch (option) {
+            case 1:
+                System.out.println("Let's add to your cart!");
+                String add = "add";
+                while (add.equals("add")) {
+                    addCart(ll);
+                    System.out.println();
+                    System.out.println("Book added!");
+                    System.out.println("Any other books you'd like to add?");
+                    System.out.print("Type 'add' if yes, anything else if no: ");
+                    add = s.nextLine();    
+                }
+                break;
+            case 2:
+                System.out.println("Let's remove books from your cart!");
+                String remove = "remove";
+                while (remove.equals("remove") && cart.size() > 0) {
+                    removeCart(cart);
+                    System.out.println();
+                    System.out.println("Book removed!");
+                    System.out.println("Other books you'd like to remove?");
+                    System.out.println("Type 'remove' if yes, anything else if no: ");
+                    remove = s.nextLine();
+                }
+                break;
+            case 3:
+                System.out.println("Let's clear your cart!");
+                clearCart();
+                break;
+            default:
+                System.out.println("Invalid Input :(");
+        }
+        s.close();   
+    }
+
+
     @Override
     public String toString() {
         String s = "";
         s += "\n";
         s += "CUSTOMER ACCOUNT DETAILS \n";
-        s += "-----------------------------\n";
+        s += "------------------------\n";
         s += super.toString();
         s += "\n";
         s += "Cart Items: \n";
@@ -88,7 +155,7 @@ public class Customer extends User {
         else {
             s += "No orders placed\n";
         }
-        s += "---------------------------\n";
+        s += "------------------------\n";
 
         return s;
     }
