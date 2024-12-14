@@ -94,13 +94,14 @@ public abstract class User { // a public abstract class for BookShop User accoun
         System.out.println("\t3) Password");
     }
 
-        public void checkAccount() {
-            Scanner s = new Scanner(System.in);
-            System.out.println("What part of your account would you like to check?");
-            accountDetails();
-            System.out.println("\t4) Name");
-            System.out.print("Type the number of the option you'd like to see: ");
+    public void checkAccount(Scanner s) { // Accept Scanner as a parameter
+        System.out.println("What part of your account would you like to check?");
+        accountDetails();
+        System.out.println("\t4) Name");
+        System.out.print("Type the number of the option you'd like to see: ");
+        if (s.hasNextInt()) {
             int option = s.nextInt();
+            s.nextLine(); // Consume the leftover newline
             switch (option) {
                 case 1:
                     System.out.println("Your Email Is: " + email);
@@ -117,55 +118,70 @@ public abstract class User { // a public abstract class for BookShop User accoun
                 default:
                     System.out.println("Invalid Input :(");
             }
-            s.close();
+        } else {
+            System.out.println("Invalid input. Please enter a valid number.");
+            s.nextLine(); // Consume the invalid input
         }
+    }
 
-        public void changeAccount() {
-            Scanner s = new Scanner(System.in);
-            System.out.println("What part of your account would you like to change?");
-            accountDetails();
-            System.out.print("Type the number of the option you'd like to change: ");
+    public void changeAccount(Scanner s) { // Accept Scanner as a parameter
+        System.out.println("What part of your account would you like to change?");
+        accountDetails();
+        System.out.print("Type the number of the option you'd like to change: ");
+        if (s.hasNextInt()) {
             int option = s.nextInt();
-            s.nextLine(); 
-    
+            s.nextLine(); // Consume the leftover newline
+
             switch (option) {
                 case 1:
-                    String e = "e";
-                    while (e.contains("@") == false || e.contains(".") == false || Character.isLetter(e.charAt(0)) == false) {
+                    String e = "";
+                    while (!e.contains("@") || !e.contains(".") || !Character.isLetter(e.charAt(0))) {
                         System.out.println("What will your new email be? : ");
                         e = s.nextLine();
+                        if (!e.contains("@") || !e.contains(".") || !Character.isLetter(e.charAt(0))) {
+                            System.out.println("Invalid email format. Please try again.");
+                        }
                     }
                     setEmail(e);
-                    System.out.println("Change made successfully!"); //changed wording
+                    System.out.println("Change made successfully!");
                     break;
                 case 2:
                     userNameGuidelines();
-                    String user = "user";
-                    while (user.length() < 5 || user.length() > 15 || Character.isLetter(user.charAt(0)) == false) {
+                    String user = "";
+                    while (user.length() < 5 || user.length() > 15 || !Character.isLetter(user.charAt(0))) {
                         System.out.println("Type your new username here: ");
                         user = s.nextLine();
+                        if (user.length() < 5 || user.length() > 15 || !Character.isLetter(user.charAt(0))) {
+                            System.out.println("Invalid username. Please follow the guidelines.");
+                        }
                     } 
                     setUsername(user); 
-                    System.out.println("Change made successfully!"); //changed wording              
+                    System.out.println("Change made successfully!");              
                     break;
                 case 3:
                     passWordGuidelines();
-                    String p = "p";
-                    while (p.length() < 8 || p.length() > 12 || p.matches(".*\\d.*") == false || Character.isLetter(p.charAt(0)) == false) {
+                    String p = "";
+                    while (p.length() < 8 || p.length() > 12 || !p.matches(".*\\d.*") || !Character.isLetter(p.charAt(0))) {
                         System.out.println("Type your new password here: ");
                         p = s.nextLine();
+                        if (p.length() < 8 || p.length() > 12 || !p.matches(".*\\d.*") || !Character.isLetter(p.charAt(0))) {
+                            System.out.println("Invalid password. Please follow the guidelines.");
+                        }
                     }
                     setPassword(p);
-                    System.out.println("Change made successfully!"); //changed wording             
+                    System.out.println("Change made successfully!");             
                     break;
                 default:
                     System.out.println("Invalid Input :(");
             }
-            toString();
-            s.close();
+            // Optionally, display updated account details
+            System.out.println("Updated Account Details:");
+            System.out.println(this.toString());
+        } else {
+            System.out.println("Invalid input. Please enter a valid number.");
+            s.nextLine(); // Consume the invalid input
         }
-    
-
+    }
 
     @Override // for child classes Customer and Administrator
     public String toString() { // toString() prints details shared by all Users
