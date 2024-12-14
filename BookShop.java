@@ -20,84 +20,7 @@ public class BookShop {
         System.out.println("\t 4) Is less than 13 characters");
     }
 
-    public static void accountDetails() {
-        System.out.println("\t1) Email");
-        System.out.println("\t2) Username");
-        System.out.println("\t3) Password");
-    }
-
-    public static void checkAccount(User u) {
-        Scanner s = new Scanner(System.in);
-        System.out.println("What part of your account would you like to check?");
-        accountDetails();
-        System.out.println("\t4) Name");
-        System.out.print("Type the number of the option you'd like to see: ");
-        int option = s.nextInt();
-        switch (option) {
-            case 1:
-                System.out.println("Your Email Is: " + u.getEmail());
-                break;
-            case 2:
-                System.out.println("Your Username Is: " + u.getUsername());
-                break;
-            case 3:
-                System.out.println("Your Password Is: " + u.getPassword());
-                break;
-            case 4:
-                System.out.println("Your Name Is: " + u.getName());
-                break;
-            default:
-                System.out.println("Invalid Input :(");
-        }
-        s.close();
-    }
-
-    public static void changeAccount(User u) {
-        Scanner s = new Scanner(System.in);
-        System.out.println("What part of your account would you like to change?");
-        accountDetails();
-        System.out.print("Type the number of the option you'd like to change: ");
-        int option = s.nextInt();
-        s.nextLine(); 
-
-        switch (option) {
-            case 1:
-                String e = "e";
-                while (e.contains("@") == false || e.contains(".") == false || Character.isLetter(e.charAt(0)) == false) {
-                    System.out.println("What will your new email be? : ");
-                    e = s.nextLine();
-                }
-                u.setEmail(e);
-                System.out.println("Change made successfully!"); //changed wording
-                break;
-            case 2:
-                userNameGuidelines();
-                String user = "user";
-                while (user.length() < 5 || user.length() > 15 || Character.isLetter(user.charAt(0)) == false) {
-                    System.out.println("Type your new username here: ");
-                    user = s.nextLine();
-                } 
-                u.setUsername(user); 
-                System.out.println("Change made successfully!"); //changed wording              
-                break;
-            case 3:
-                passWordGuidelines();
-                String p = "p";
-                while (p.length() < 8 || p.length() > 12 || p.matches(".*\\d.*") == false || Character.isLetter(p.charAt(0)) == false) {
-                    System.out.println("Type your new password here: ");
-                    p = s.nextLine();
-                }
-                u.setPassword(p);
-                System.out.println("Change made successfully!"); //changed wording             
-                break;
-            default:
-                System.out.println("Invalid Input :(");
-        }
-        System.out.println(u);
-        s.close();
-    }
-
-    public static void defaultBooks(LinkedList<Book> ll) {
+    public static LinkedList<Book> defaultBooks(LinkedList<Book> ll) {
         Fiction f1 = new Fiction("Harry Potter And The Sourcerer's Stone", "J.K. Rowling", "English",
         1997, 6.99, true, 5, "FANTASY", true, "8+");
         ll.add(f1);
@@ -117,11 +40,16 @@ public class BookShop {
         2024, 18.57, true, 3, "TRAVEL BOOKS", 2, true, "NATIONAL PARKS");
         ll.add(nf3);
         Collections.sort(ll);
+        return ll;
+    }
+
+    public static void listBooks(LinkedList<Book> ll) {
         int line = 0;
         for (Book b : ll) {
             System.out.println(++line);
             System.out.println();
             System.out.println(b);
+            System.out.println();
         }
         try {
             int ln = 0;
@@ -141,72 +69,8 @@ public class BookShop {
             ioe.printStackTrace();
         }
     }
-
       
-    public static void addCart(LinkedList<Book> ll, Customer c) {
-        Scanner s = new Scanner(System.in);
-        System.out.println("What book would you like to add?");
-        System.out.print("Enter the number of the book you want here: ");
-        int bookNum = s.nextInt();
-        bookNum -= 1;
-        c.addToCart(ll.get(bookNum));
-        s.close();
-    }
-
-    public static void removeCart(LinkedList<Book> ll, Customer c) {
-        Scanner s = new Scanner(System.in);
-        System.out.println("Ok. Type the number of the book you'd like to remove here: ");
-        int removedBook = s.nextInt();
-        removedBook -= 1;
-        c.removeFromCart(ll.get(removedBook));
-        s.close();
-    }
-    
-    public static void moreOptions(LinkedList<Book> ll, Customer c) {
-        Scanner s = new Scanner (System.in);
-        System.out.println("Now that your cart has books, there are several options you can choose from...");
-        System.out.println("\t1) Adding Books");
-        System.out.println("\t2) Removing Books");
-        System.out.println("\t3) Clearing Your Cart");
-        System.out.println("What would you like to do?");
-        System.out.print("Type in your number option here: ");
-        int option = s.nextInt();
-        switch (option) {
-            case 1:
-                System.out.println("Let's add to your cart!");
-                String add = "add";
-                while (add.equals("add")) {
-                    addCart(ll, c);
-                    System.out.println();
-                    System.out.println("Book added!");
-                    System.out.println("Any other books you'd like to add?");
-                    System.out.print("Type 'add' if yes, anything else if no: ");
-                    add = s.nextLine();    
-                }
-                break;
-            case 2:
-                System.out.println("Let's remove books from your cart!");
-                String remove = "remove";
-                while (remove.equals("remove") && c.getCart().size() > 0) {
-                    removeCart(c.getCart(), c);
-                    System.out.println();
-                    System.out.println("Book removed!");
-                    System.out.println("Other books you'd like to remove?");
-                    System.out.println("Type 'remove' if yes, anything else if no: ");
-                    remove = s.nextLine();
-                }
-                break;
-            case 3:
-                System.out.println("Let's clear your cart!");
-                c.clearCart();
-                break;
-            default:
-                System.out.println("Invalid Input :(");
-        }
-        s.close();   
-    }
-
-public static void administratorMenu(){
+    public static void administratorMenu(){
         System.out.println("1. Review account");
         System.out.println("2. Change account");
         System.out.println("3. Add a book to the shop");
@@ -219,55 +83,55 @@ public static void administratorMenu(){
     }
 
     public static void createBooksToAdd(Administrator a){
-        Scanner scnr = new Scanner(System.in);
-        System.out.println("Enter the information of the book to add: ");
-        System.out.print("Title: ");
-        String title = scnr.nextLine();
-        System.out.print("Author: ");
-        String author = scnr.nextLine();
-        System.out.print("Language: ");
-        String language = scnr.nextLine();
-        System.out.print("Year Published: ");
-        int year = scnr.nextInt();
-        scnr.nextLine();
-        System.out.print("Price: ");
-        double price = scnr.nextDouble();
-        scnr.nextLine();
-        System.out.print("Availability (enter 'true' or 'false'): ");
-        boolean availability = scnr.nextBoolean();
-        scnr.nextLine();
-        System.out.print("Stock: ");
-        int stock = scnr.nextInt();
-        scnr.nextLine();
-        System.out.println("Is the book Fiction or Nonfiction?");
-        String bookType = scnr.nextLine();
-        if (bookType.equalsIgnoreCase("Fiction")){
-            System.out.print("Is it a bestseller (enter 'true' or 'false'): ");
-            boolean bSeller = scnr.nextBoolean();
+            Scanner scnr = new Scanner(System.in);
+            System.out.println("Enter the information of the book to add: ");
+            System.out.print("Title: ");
+            String title = scnr.nextLine();
+            System.out.print("Author: ");
+            String author = scnr.nextLine();
+            System.out.print("Language: ");
+            String language = scnr.nextLine();
+            System.out.print("Year Published: ");
+            int year = scnr.nextInt();
             scnr.nextLine();
-            System.out.print("Book Genre: ");
-            String genre = scnr.nextLine();
-            System.out.print("Target age of readers: ");
-            String age = scnr.nextLine();
-            Fiction newBook = new Fiction(title, author, language, year, price, availability, stock, genre, bSeller, age);
-            a.addBook(newBook);
+            System.out.print("Price: ");
+            double price = scnr.nextDouble();
+            scnr.nextLine();
+            System.out.print("Availability (enter 'true' or 'false'): ");
+            boolean availability = scnr.nextBoolean();
+            scnr.nextLine();
+            System.out.print("Stock: ");
+            int stock = scnr.nextInt();
+            scnr.nextLine();
+            System.out.println("Is the book Fiction or Nonfiction?");
+            String bookType = scnr.nextLine();
+            if (bookType.equalsIgnoreCase("Fiction")){
+                System.out.print("Is it a bestseller (enter 'true' or 'false'): ");
+                boolean bSeller = scnr.nextBoolean();
+                scnr.nextLine();
+                System.out.print("Book Genre: ");
+                String genre = scnr.nextLine();
+                System.out.print("Target age of readers: ");
+                String age = scnr.nextLine();
+                Fiction newBook = new Fiction(title, author, language, year, price, availability, stock, genre, bSeller, age);
+                a.addBook(newBook);
+            }
+            else if (bookType.equalsIgnoreCase("Nonfiction")){
+                System.out.print("Book Genre: ");
+                String genre = scnr.nextLine();
+                System.out.print("Edition: ");
+                int edition = scnr.nextInt();
+                scnr.nextLine();
+                System.out.print("Peer Reviewed (enter 'true' or 'false'): ");
+                boolean reviewed = scnr.nextBoolean();
+                scnr.nextLine();
+                System.out.print("Book Topic: ");
+                String topic = scnr.nextLine();
+                Nonfiction newBook = new Nonfiction(title, author, language, year, price, availability, stock, genre, edition, reviewed, topic);
+                a.addBook(newBook);
+            }
+            scnr.close();
         }
-        else if (bookType.equalsIgnoreCase("Nonfiction")){
-            System.out.print("Book Genre: ");
-            String genre = scnr.nextLine();
-            System.out.print("Edition: ");
-            int edition = scnr.nextInt();
-            scnr.nextLine();
-            System.out.print("Peer Reviewed (enter 'true' or 'false'): ");
-            boolean reviewed = scnr.nextBoolean();
-            scnr.nextLine();
-            System.out.print("Book Topic: ");
-            String topic = scnr.nextLine();
-            Nonfiction newBook = new Nonfiction(title, author, language, year, price, availability, stock, genre, edition, reviewed, topic);
-            a.addBook(newBook);
-        }
-        scnr.close();
-    }
 
     public static void removeBookFromStore(Administrator a){
         Scanner scnr = new Scanner(System.in);
@@ -414,17 +278,19 @@ public static void administratorMenu(){
                 System.out.println("Alrighty! Would you like to 'review' or 'change' something in your account? : "); //changed 'check' to 'review'
                 String action = scnr.nextLine();
                 if (action.equals("review")) { //changed
-                    checkAccount(c);
+                    c.checkAccount();
                 }
                 if (action.equals("change")) {
-                    changeAccount(c);
+                    c.changeAccount();
                 }
             }
             LinkedList<Book> books = new LinkedList<>();
+            System.out.println();
             System.out.println("ALL BOOKS IN BOOKSHOP");
             System.out.println("---------------------");
             System.out.println();
-            defaultBooks(books);
+            books = defaultBooks(books);
+            listBooks(books);
             System.out.println("Let's continue!");
             System.out.println("Above is a list of books we have at the current moment!");
             System.out.println("To view the list in full, see the file we've deposited to your account on the side of this interface.");
@@ -449,7 +315,7 @@ public static void administratorMenu(){
                             System.out.println("Let's add to your cart!");
                             String add = "add";
                             while (add.equals("add")) {
-                                addCart(books, c);
+                                c.addCart(books);
                                 System.out.println();
                                 System.out.println("Book added!");
                                 System.out.println("Any other books you'd like to add?");
@@ -458,7 +324,7 @@ public static void administratorMenu(){
                             }        
                         }
                         else if (c.getCart().size() > 0) {
-                            moreOptions(books, c);
+                            c.moreOptions(books);
                         }
                         System.out.println("Edit Success!");
                         System.out.println("Here's what your cart looks like...");
@@ -512,6 +378,31 @@ public static void administratorMenu(){
                             System.out.println("Type 'add' or 'purchase' here : ");
                             addBook = scnr.nextLine();
                         }
+                        System.out.println("Any thoughts about removing books before purchase?");
+                        System.out.println("Type 'yes' or 'no' : ");
+                        String removeBook = scnr.nextLine();
+                        while (removeBook.equals("yes") && o2.getOrderItems().size() > 0) {
+                            System.out.println("Ok. What book would you like to remove from your order?");
+                            int item = 0;
+                            for (Book b : o2.getOrderItems()) {
+                                System.out.println();
+                                System.out.println(++item);
+                                System.out.println();
+                                System.out.println(b);
+                                System.out.println();
+                            }
+                            System.out.print("Type the number of the book you'd like to remove here: ");
+                            int itemNum = scnr.nextInt();
+                            itemNum -= 1;
+                            o2.removeBookFromOrder(o2.getOrderItems().get(itemNum));
+                            System.out.println("Below is a simulated order of the books you'd like to pay for now...");
+                            System.out.println();
+                            System.out.println(o2);
+                            System.out.println();
+                            System.out.println("Would you like to remove another book?");
+                            System.out.println("Type 'yes' or 'no' here : ");
+                            removeBook = scnr.nextLine();
+                        }
                         System.out.println("Would you like to PAY for this order or CANCEL?");
                         System.out.print("Type 'pay' or 'cancel' here: ");
                         String finalDecision2 = scnr.nextLine();
@@ -525,9 +416,12 @@ public static void administratorMenu(){
         }
 
         if (user.equalsIgnoreCase("administrator")) {
+            LinkedList<Book> books2 = new LinkedList<>();
+            books2 = defaultBooks(books2);
             Administrator a = new Administrator(email, username, password, firstName, lastName);
             shop.currentUser = a;
             shop.saveUser(a); // save administrator to user database
+            a.books = books2;
             System.out.println(a);
             System.out.println("Congrats! Your account has been successfully created.");
             System.out.println("What would you like to do?");
@@ -540,12 +434,12 @@ public static void administratorMenu(){
                 case 1:
                     System.out.println("----------REVIEW ACCOUNT----------");
                     System.out.println();
-                    checkAccount(a);
+                    a.checkAccount();
                     break;
                 case 2:
                     System.out.println("----------CHANGE ACCOUNT----------");
                     System.out.println();
-                    changeAccount(a);
+                    a.changeAccount();
                     break;
                 case 3:
                     System.out.println("----------ADD A BOOK TO THE SHOP----------");
@@ -555,16 +449,19 @@ public static void administratorMenu(){
                 case 4:
                     System.out.println("----------REMOVE A BOOK FROM THE SHOP----------");
                     System.out.println();
+                    listBooks(a.books);
                     removeBookFromStore(a);
                     break;
                 case 5:
                     System.out.println("----------UPDATE BOOK STOCK----------");
                     System.out.println();
+                    listBooks(a.books);
                     updateStock(a);
                     break;
                 case 6:
                     System.out.println("----------UPDATE BOOK PRICES----------");
                     System.out.println();
+                    listBooks(a.books);
                     updatePrice(a);
                     break;
                 case 7:
