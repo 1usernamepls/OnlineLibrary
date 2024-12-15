@@ -172,29 +172,12 @@ public class Order {
 
     // The following are Mutators:
 
-    // Mutator for order ID. Which validates that the ID is a 5-digit number.
-    public void setOrderID(int i){
-        if (i < 100000 && i > 9999){
-            orderID = i;
-        }
-    }
-
-    // Mutator for order total.
+    // Mutator for order total
     public void setOrderTotal(double t){
         total = t;
     }
 
-    // Mutator for order status.
-    public void setOrderStatus(String s){
-        status = s;
-    }
-
-    // Mutator for customer.
-    public void setCustomer(Customer c){
-        customer = c;
-    }
-
-    // Mutator for order items.
+    // Mutator for order items
     public void setOrderItems(ArrayList<Book> b){
         items = b;
     }
