@@ -30,21 +30,6 @@ public class Order {
         items = new ArrayList<>();
     }
 
-    //copy constructor: 
-    // this copy constructor creates a new order that is a copy of the given order.
-    public Order(Order o){
-        this.customer = o.customer;
-        this.total = o.total;
-        this.status = o.status;
-        this.date = o.date;
-        this.orderID = o.orderID;
-
-        items = new ArrayList<>();
-        for (Book book : o.items){
-            this.items.add(book);
-        }
-    }
-
     //addToOrder method:
     // this method adds a book to the order if its in stock.
     // and updated the order total and decreases the book's stock.
