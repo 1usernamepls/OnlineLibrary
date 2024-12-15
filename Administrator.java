@@ -3,13 +3,18 @@ import java.util.LinkedList;
 import java.util.Scanner;
 
 public class Administrator extends User {
-    protected LinkedList<Book> books; // list of books in the store to manage
-    protected ArrayList<Order> completedOrders = new ArrayList<>();
-    protected ArrayList<Order> allOrders = new ArrayList<>();
+    protected LinkedList<Book> books; // list of all the existing books in the store's catalog
+    protected ArrayList<Order> completedOrders; //list of all the orders the store has completed
+    protected ArrayList<Order> allOrders; //list of all the store's orders (onging and completed)
 
+    //overloaded constructor to create an Administrator object with all relevant User information  
+    //also initializes the member variables unique to an Administrator object
     public Administrator(String e, String u, String p, String f, String l){
         super(e, u, p, f, l);
+
         books = new LinkedList<>();
+        completedOrders = new ArrayList<>();
+        allOrders = new ArrayList<>();
     }
 
     // ADD NEW BOOK TO THE SHOP
@@ -29,8 +34,8 @@ public class Administrator extends User {
 
     // UPDATE THE STOCK OF A BOOK
     public void updateBookStock(Book book, int newStock) {
-        if (this.books.contains(book)) {
-            book.setStock(newStock);
+        if (this.books.contains(book)) { //checks if the store has the Book object being passed in
+            book.setStock(newStock); //calls on the Book class' setStock() mutator method
             System.out.println(book.getTitle() + " stock updated to " + newStock);
         } else {
             System.out.println(book.getTitle() + " not found in the shop.");
@@ -40,24 +45,24 @@ public class Administrator extends User {
     // UPDATE THE PRICE OF A BOOK
     public void updateBookPrice(Book book, double newPrice) {
         if (this.books.contains(book)) {
-            book.setPrice(newPrice);
+            book.setPrice(newPrice); //calls on the Book class' setPrice() mutator method
             System.out.println(book.getTitle() + " price updated to $" + newPrice);
         } else {
             System.out.println(book.getTitle() + " not found in the shop.");
         }
     }
 
-    // Find books in the store based on their title
+    //method to find books in the store based only on their title
     public Book findBookByTitle(String title) {
         for (Book book : books) {
             if (book.getTitle().equalsIgnoreCase(title)) { 
-                return book;
+                return book; //returns the Book object found that matches the  title
             }
         }
         return null; 
     }    
 
-    // View all of the store's Orders (both ongoing and completed)
+    //method to view all of the store's Orders (both ongoing and completed)
     public void viewOrders(){
         if (allOrders.isEmpty()) {
             System.out.println("No orders to display.");
@@ -69,23 +74,24 @@ public class Administrator extends User {
         }
     }
     
-    // Updates the completedOrder list
+   //method to update the completedOrder list 
     public void addFinishedOrder(){
         for (Order order : allOrders){
-            if (order.getOrderStatus().equalsIgnoreCase("Delivered")) {
-                if (!completedOrders.contains(order)) {
-                    completedOrders.add(order);
+            order.updatedStatus(); //calls the updatedStatus method from the Order class to update status based on time passed
+            if (order.getOrderStatus().equals("Delivered")) {
+                if (!completedOrders.contains(order)) { //avoids completed orders from continuously being added to completedOrders
+                    completedOrders.add(order); 
                 }
             }
         }
     }
 
-    // Adds new orders to list to track all orders
+    // adds new orders to list to track all orders
     public void addOrder(Order order) {
         allOrders.add(order);
     }
 
-    // Accessors 
+    // accessors 
     public LinkedList<Book> getBooks() {
         return this.books;
     }
@@ -98,6 +104,13 @@ public class Administrator extends User {
         return allOrders;
     }
 
+    /* no mutator methods because...
+     * 1. addBook() and removeBook() methods already exist to change the books variable
+     * 2. addFinishedOrders() method automatically adds the delivered orders to the completedOrders variable
+     * 3. addOrder() method adds Order objects to the allOrders variable
+     */
+
+    //method with all options for an Administrator to perform on the store website
     public void administratorMenu(){
         System.out.println("1. Review account");
         System.out.println("2. Change account");
@@ -107,23 +120,20 @@ public class Administrator extends User {
         System.out.println("6. Update book price");
         System.out.println("7. View shop's completed orders");
         System.out.println("8. Update completed orders");
-        System.out.println("9. Logout");
     }
 
-//Start of ChatGPT Error Checked Code
+    //Start of ChatGPT Error Checked Code
 
-    public void createBooksToAdd(Scanner scnr){ // Passing scanner as an argument
+    //method to add Book objects to the books variable based on user (Administrator) input
+    //utilized in the Administrator implementation in the BookShop class
+    public void createBooksToAdd(Scanner scnr){ //passing scanner as an argument
         System.out.println("Enter the information of the book to add: ");
-        
         System.out.print("Title: ");
         String title = scnr.nextLine().trim();
-        
         System.out.print("Author: ");
         String author = scnr.nextLine().trim();
-        
         System.out.print("Language: ");
         String language = scnr.nextLine().trim();
-        
         int year = 0;
         while (true) {
             System.out.print("Year Published: ");
@@ -136,7 +146,6 @@ public class Administrator extends User {
                 System.out.println("Invalid input. Please enter a valid year (e.g., 2021).");
             }
         }
-        
         double price = 0.0;
         while (true) {
             System.out.print("Price (e.g., 19.99): ");
@@ -152,7 +161,6 @@ public class Administrator extends User {
                 System.out.println("Invalid price format. Please enter a valid number (e.g., 19.99).");
             }
         }
-
         boolean availability = false;
         while (true) {
             System.out.print("Availability (enter 'true' or 'false'): ");
@@ -164,7 +172,6 @@ public class Administrator extends User {
                 System.out.println("Invalid input. Please enter 'true' or 'false'.");
             }
         }
-
         int stock = 0;
         while (true) {
             System.out.print("Stock: ");
@@ -177,7 +184,6 @@ public class Administrator extends User {
                 System.out.println("Invalid input. Please enter a valid number for stock (e.g., 10).");
             }
         }
-
         String bookType = "";
         while (true) {
             System.out.print("Is the book Fiction or Nonfiction? ");
@@ -188,8 +194,7 @@ public class Administrator extends User {
                 System.out.println("Invalid input. Please enter 'Fiction' or 'Nonfiction'.");
             }
         }
-
-        if (bookType.equalsIgnoreCase("Fiction")){
+        if (bookType.equalsIgnoreCase("Fiction")){ //gets the unique information need for a Fiction book object
             boolean bSeller = false;
             while (true) {
                 System.out.print("Is it a bestseller (enter 'true' or 'false'): ");
@@ -201,20 +206,15 @@ public class Administrator extends User {
                     System.out.println("Invalid input. Please enter 'true' or 'false'.");
                 }
             }
-
             System.out.print("Book Genre: ");
             String genre = scnr.nextLine().trim();
-            
             System.out.print("Target age of readers (e.g., 8+, 12+): ");
             String age = scnr.nextLine().trim();
-
             Fiction newBook = new Fiction(title, author, language, year, price, availability, stock, genre, bSeller, age);
-            addBook(newBook);
+            addBook(newBook); //adds the Fiction book to the store's catalog using the addBook() method
         }
-        else if (bookType.equalsIgnoreCase("Nonfiction")){
-            System.out.print("Book Genre: ");
+        else if (bookType.equalsIgnoreCase("Nonfiction")){ //gets the unique information needed for a Nonfiction book object
             String genre = scnr.nextLine().trim();
-            
             int edition = 0;
             while (true) {
                 System.out.print("Edition: ");
@@ -227,7 +227,6 @@ public class Administrator extends User {
                     System.out.println("Invalid input. Please enter a valid edition number (e.g., 1).");
                 }
             }
-            
             boolean reviewed = false;
             while (true) {
                 System.out.print("Peer Reviewed (enter 'true' or 'false'): ");
@@ -239,30 +238,31 @@ public class Administrator extends User {
                     System.out.println("Invalid input. Please enter 'true' or 'false'.");
                 }
             }
-
             System.out.print("Book Topic: ");
             String topic = scnr.nextLine().trim();
-
             Nonfiction newBook = new Nonfiction(title, author, language, year, price, availability, stock, genre, edition, reviewed, topic);
-            addBook(newBook);
+            addBook(newBook); //adds the Nonfiction book to the store's catalog using the addBook() method
         }
     }
-//End of ChatGPT error checked code
+    //End of ChatGPT error checked code
 
-    
-    public void removeBookFromStore(Scanner scnr){ // Passing scanner as an argument
+    //method to remove a Book object from store catalog based on user (Administrator) input
+    //utilized in the Administrator implementation in the BookShop class
+    public void removeBookFromStore(Scanner scnr){ //passing scanner as an argument
         System.out.print("Enter book title to remove: ");
         String bookToRemove = scnr.nextLine().trim();
-        Book book = findBookByTitle(bookToRemove); 
+        Book book = findBookByTitle(bookToRemove); //calls the findBookbyTitle() method to return the Book object of the book to remove
         if (book != null) {
-            removeBook(book);
+            removeBook(book); //removes the book if it not a null value
         } 
         else {
             System.out.println("Book could not be found.");
         }
     }
 
-    public void updateStock(Scanner scnr){ // Passing scanner as an argument
+    //method to updatePrice of a Book object with user input
+    //utilized in the Administrator implementation in the BookShop class
+    public void updateStock(Scanner scnr){ //passing scanner as an argument
         System.out.print("Enter book title to update stock: ");
         String stockTitle = scnr.nextLine().trim();
         Book stockBook = findBookByTitle(stockTitle);
@@ -278,17 +278,19 @@ public class Administrator extends User {
                 } catch (NumberFormatException e) {
                     System.out.println("Invalid input. Please enter a valid number for stock (e.g., 10).");
                 }
-            }
-            updateBookStock(stockBook, newStock);
+            } 
+            updateBookStock(stockBook, newStock); //calls on the updateBookStock() method from this class
         } 
         else {
             System.out.println("Book could not be found.");
         }
     }
 
-    public void updatePrice(Scanner scnr){ // Passing scanner as an argument
-        System.out.print("Enter book title to update price: ");
-        String bookToPrice = scnr.nextLine().trim();
+    //method to updatePrice of a Book object with user input
+    //utilized in the Administrator implementation in the BookShop class
+    public void updatePrice(Scanner scnr){ //passing scanner as an argument
+        System.out.print("Enter book title to update price: "); 
+        String bookToPrice = scnr.nextLine().trim(); 
         Book priceBook = findBookByTitle(bookToPrice);
         if (priceBook != null) {
             double newPrice = 0.0;
@@ -306,14 +308,14 @@ public class Administrator extends User {
                     System.out.println("Invalid price format. Please enter a valid number (e.g., 19.99).");
                 }
             }
-            updateBookPrice(priceBook, newPrice);
+            updateBookPrice(priceBook, newPrice); //calls on the updateBookPrice from this class
         } 
         else {
             System.out.println("Book could not be found.");
         }
     }
 
-
+    //toString() method that displays the Administrator's information & the store's current book catalog
     @Override
     public String toString() {
         String s = "";
@@ -321,7 +323,26 @@ public class Administrator extends User {
         s += "ADMINISTRATOR ACCOUNT DETAILS\n";
         s += "-----------------------------\n";
         s += super.toString();
-        // Additional administrator-specific details can be added here
+        s += "\n";
+        s += "Current Books in the Store: \n";
+        s += "\n";
+        for (Book book : books){
+            s += book.toString(); 
+            s += "\n";
+        }
         return s;
+    }
+
+    //equals method to determine if 2 Administrator objects are equal
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Administrator)) {
+            return false;
+        }
+        Administrator a = (Administrator) o;
+        return this.books.equals(a.books); //Administrator objects that have the book catalogs are equal
     }
 }
