@@ -18,7 +18,6 @@ public class Customer extends User {
         if (book.getStock() > 0){ //utilizes the getStock() method from the Book class to check the store's stock
             cart.add(book); //if there are available copies of the book, it gets added to the cart
             System.out.println(book.getTitle() + " has been added to your cart!");
-            book.setStock(book.getStock() - 1); //decreases the book's stock in store records by 1
         }
         else {
             System.out.println("Sorry, " + book.getTitle() + " is not available to add to cart");
@@ -30,7 +29,6 @@ public class Customer extends User {
         if (cart.contains(book)){ //checks if the cart has the Book object to be removed 
             cart.remove(book); //if the Book object is in the cart, it gets removed from cart
             System.out.println(book.getTitle() + " has been removed from your cart");
-            book.setStock(book.getStock() + 1); //increases the books stock in store records by 1
         }
         else { 
             System.out.println(book.getTitle() + " was not in your cart so it was not removed");
