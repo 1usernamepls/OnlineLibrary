@@ -94,7 +94,64 @@ public class BookShop { //
             ioe.printStackTrace(); // output error and message
         }
     }
-      
+
+    public static void defaultOrders(LinkedList<Book> ll, Administrator a) {
+        Customer c = new Customer("pattyj@aol.com", "mummy2", "iluvu1987", "Patty", "Johnson");
+        Order o1 = new Order(c);
+        o1.addToOrder(ll.get(0));
+        o1.addToOrder(ll.get(2));
+        o1.addToOrder(ll.get(5));
+        o1.setOrderStatus("Delivered");
+        a.allOrders.add(o1);
+        Customer b = new Customer("manimuni@chapman.edu", "The14u", "igilldoit2", "Mark", "Mendoza");
+        Order o2 = new Order(b);
+        o2.addToOrder(ll.get(4));
+        o2.addToOrder(ll.get(6));
+        o2.setOrderStatus("Shipped");
+        a.allOrders.add(o2);
+        Customer d = new Customer("bunnymai@gmail.com", "puppies4ever", "myla46!!", "Kai", "Jackson");
+        Order o3 = new Order(d);
+        o3.addToOrder(ll.get(1));
+        o3.addToOrder(ll.get(7));
+        o3.setOrderStatus("Shipped");
+        a.allOrders.add(o3);
+        Customer e = new Customer("glop@yahoo.com", "username1", "yahooglop0", "Gustavo", "Kumar");
+        Order o4 = new Order(e);
+        o4.addToOrder(ll.get(3));
+        o4.setOrderStatus("Delivered");
+        a.allOrders.add(o4);
+        Customer f = new Customer("kangminji@gmail.com", "minHoSun!", "ello123h", "Min", "Park");
+        Order o5 = new Order(f);
+        o5.addToOrder(ll.get(6));
+        o5.addToOrder(ll.get(0));
+        o5.addToOrder(ll.get(3));
+        o5.addToOrder(ll.get(7));
+        a.allOrders.add(o5);
+    }
+
+    public static void listOrders(ArrayList<Order> o) {
+        try { // try this code for writing the file
+            int ln = 0;
+            PrintWriter pw = new PrintWriter(new FileWriter("Orders.txt"));
+            // an Orders.txt file is created to write orders in
+            pw.println("ALL ORDERS IN BOOKSHOP"); // title
+            pw.println("----------------------");
+            pw.println(); // write newline
+            for (Order i : o) { // for each order in the linkedlist
+                pw.println(++ln); // write the order number
+                pw.println(); // newline
+                pw.println(i); // order contents
+                pw.println(); // newline
+            }
+            pw.close(); // close printwriter after finished
+        }
+        catch (IOException ioe) { // if something goes wrong writing the file
+            System.err.println("Something went wrong when writing to the file!");
+            ioe.printStackTrace(); // output error and message
+        }
+    }
+    
+
     public void logout() {
         if (currentUser != null) { //if someone is currently logged in
             if (!savedUsers.containsKey(currentUser.getEmail())) { //current user is not saved in user database
@@ -372,79 +429,119 @@ public class BookShop { //
             a.books = books2;
             System.out.println(a);
             System.out.println("Congrats! Your account has been successfully created.");
-            System.out.println("What would you like to do?");
-            a.administratorMenu();
-            System.out.print("Type the number of the option you'd like to choose: ");
-            if (scnr.hasNextInt()) {
-                int choice = scnr.nextInt();
-                scnr.nextLine(); // Consume the leftover newline
+            System.out.println("Would you like to continue?");
+            System.out.println("Type 'yes' or 'no' : ");
+            String admindecision = scnr.nextLine();
+            while (admindecision.equalsIgnoreCase("yes")) {
+                System.out.println("What would you like to do?");
+                a.administratorMenu();
+                System.out.print("Type the number of the option you'd like to choose: ");
+                if (scnr.hasNextInt()) {
+                    int choice = scnr.nextInt();
+                    scnr.nextLine(); // Consume the leftover newline
 
-                switch (choice) {
-                    case 1:
-                        System.out.println("----------REVIEW ACCOUNT----------");
-                        System.out.println();
-                        a.checkAccount(scnr); //Notice how im passing a scanner object
-                        break;
-                    case 2:
-                        System.out.println("----------CHANGE ACCOUNT----------");
-                        System.out.println();
-                        a.changeAccount(scnr);
-                        break;
-                    case 3:
-                        System.out.println("----------ADD A BOOK TO THE SHOP----------");
-                        System.out.println();
-                        a.createBooksToAdd(scnr);
-                        break;
-                    case 4:
-                        System.out.println("----------REMOVE A BOOK FROM THE SHOP----------");
-                        System.out.println();
-                        listBooks(a.getBooks());
-                        printBooks(a.getBooks());
-                        a.removeBookFromStore(scnr);
-                        listBooks(a.getBooks());
-                        break;
-                    case 5:
-                        System.out.println("----------UPDATE BOOK STOCK----------");
-                        System.out.println();
-                        listBooks(a.getBooks());
-                        a.updateStock(scnr);
-                        break;
-                    case 6:
-                        System.out.println("----------UPDATE BOOK PRICES----------");
-                        System.out.println();
-                        listBooks(a.getBooks());
-                        a.updatePrice(scnr);
-                        break;
-                    case 7:
-                        System.out.println("----------VIEW SHOP'S COMPLETED ORDERS----------");
-                        System.out.println();
-                        a.viewOrderHistory();
-                        break;
-                    case 8:
-                        System.out.println("----------UPDATE COMPLETED ORDERS----------");
-                        System.out.println();
-                        a.addFinishedOrder();
-                        break; // Added break to prevent fall-through
-                    case 9:
-                        shop.logout();
-                        break;
-                    default:
-                        System.out.println("Invalid option! Please try again.");
-                        System.out.println();
-                        a.administratorMenu();
-                        System.out.print("Type the number of the option you'd like to choose: ");
-                        if (scnr.hasNextInt()) {
-                            choice = scnr.nextInt();
-                            scnr.nextLine(); // Consume the leftover newline
-                            
-                        } else {
-                            System.out.println("Invalid input. Please enter a valid number.");
-                            scnr.nextLine(); // Consume the invalid input
-                        }
+                    switch (choice) {
+                        case 1:
+                            System.out.println();
+                            System.out.println("----------REVIEW ACCOUNT----------");
+                            System.out.println();
+                            a.checkAccount(scnr); //Notice how im passing a scanner object
+                            break;
+                        case 2:
+                            System.out.println();
+                            System.out.println("----------CHANGE ACCOUNT----------");
+                            System.out.println();
+                            a.changeAccount(scnr);
+                            break;
+                        case 3:
+                            System.out.println();
+                            System.out.println("----------ADD A BOOK TO THE SHOP----------");
+                            System.out.println();
+                            listBooks(a.getBooks());
+                            a.createBooksToAdd(scnr);
+                            listBooks(a.getBooks());
+                            printBooks(a.getBooks());
+                            System.out.println("Book Addition Success!");
+                            break;
+                        case 4:
+                            System.out.println();
+                            System.out.println("----------REMOVE A BOOK FROM THE SHOP----------");
+                            System.out.println();
+                            listBooks(a.getBooks());
+                            printBooks(a.getBooks());
+                            a.removeBookFromStore(scnr);
+                            listBooks(a.getBooks());
+                            printBooks(a.getBooks());
+                            System.out.println("Book Removal Success!");
+                            break;
+                        case 5:
+                            System.out.println();
+                            System.out.println("----------UPDATE BOOK STOCK----------");
+                            System.out.println();
+                            listBooks(a.getBooks());
+                            printBooks(a.getBooks());
+                            a.updateStock(scnr);
+                            listBooks(a.getBooks());
+                            printBooks(a.getBooks());
+                            System.out.println("Stock Update Success!");
+                            break;
+                        case 6:
+                            System.out.println();
+                            System.out.println("----------UPDATE BOOK PRICES----------");
+                            System.out.println();
+                            listBooks(a.getBooks());
+                            printBooks(a.getBooks());
+                            a.updatePrice(scnr);
+                            listBooks(a.getBooks());
+                            printBooks(a.getBooks());
+                            System.out.println("Price Update Success!");
+                            break;
+                        case 7:
+                            System.out.println();
+                            System.out.println("----------VIEW SHOP'S ORDERS----------");
+                            System.out.println();
+                            defaultOrders(a.getBooks(), a);
+                            listOrders(a.getAllOrders());
+                            a.viewOrderHistory();
+                            System.out.println();
+                            System.out.println("Order History Above ^");
+                            break;
+                        case 8:
+                            System.out.println();
+                            System.out.println("----------UPDATE COMPLETED ORDERS----------");
+                            System.out.println();
+                            defaultOrders(a.getBooks(), a);
+                            listOrders(a.getAllOrders());
+                            a.addFinishedOrder();
+                            for (Order o : a.completedOrders) {
+                                System.out.println(o);
+                            }
+                            System.out.println("All Completed Orders Above ^");
+                            break; // Added break to prevent fall-through
+                        case 9:
+                            shop.logout();
+                            break;
+                        default:
+                            System.out.println("Invalid option! Please try again.");
+                            System.out.println();
+                            a.administratorMenu();
+                            System.out.print("Type the number of the option you'd like to choose: ");
+                            if (scnr.hasNextInt()) {
+                                choice = scnr.nextInt();
+                                scnr.nextLine(); // Consume the leftover newline
+                                
+                            } else {
+                                System.out.println("Invalid input. Please enter a valid number.");
+                                scnr.nextLine(); // Consume the invalid input
+                            }
+                    }
+                } else {
+                    System.out.println("Invalid input. Please enter a valid number.");
+                    scnr.nextLine(); // Consume the invalid input
                 }
-            } else {
-                System.out.println("Invalid input. Please enter a valid number.");
-                scnr.nextLine(); // Consume the invalid input
+                System.out.println("Would you like to continue with more actions?");
+                System.out.println("Type 'yes' or 'no' : ");
+                admindecision = scnr.nextLine();
             }
         }
         System.out.println("Thank you! Goodbye! :>");
