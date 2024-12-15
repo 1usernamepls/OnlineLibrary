@@ -57,9 +57,9 @@ public class Administrator extends User {
         return null; 
     }    
 
-    // view all past completed orders
-    public void viewOrderHistory(){
-        for (Order order : completedOrders) {
+    // view all of the store's Orders (both ongoing and completed)
+    public void viewOrders(){
+        for (Order order : allOrders) {
             System.out.println(order);
         }
     }
