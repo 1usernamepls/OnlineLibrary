@@ -26,3 +26,4 @@ SOURCES
      https://stackoverflow.com/questions/65503259/should-a-scanner-only-be-instantiated-only-once-if-thats-the-case-why-so / 
      https://www.theserverside.com/blog/Coffee-Talk-Java-News-Stories-and-Opinions/Java-Scanner-User-Input-example-String-next-int-long-char / 
      https://www.geeksforgeeks.org/passing-scanner-object-as-a-parameter-in-java/
+- Comments have been added to the following classes, according to the general understanding of what the class does
