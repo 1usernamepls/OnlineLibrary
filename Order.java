@@ -177,8 +177,8 @@ public class Order {
         total = t;
     }
 
-    // Mutator for order items
-    public void setOrderItems(ArrayList<Book> b){
-        items = b;
+    // Mutator for order status
+    public void setOrderStatus(String s){
+        status = s;
     }
 }
