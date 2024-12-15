@@ -518,7 +518,7 @@ public class BookShop { //
                             listOrders(a.getAllOrders());
                             a.addFinishedOrder(); //calls the addFinishedOrder() method from the Administrator class
                             for (Order o : a.getCompletedOrders()) { 
-                                System.out.println(o); // prints out all the Order objects with the "completed" status
+                                System.out.println(o); // prints out all the Order objects with the "Delivered" status
                                 System.out.println();
                             }
                             System.out.println("All Completed Orders Above ^");
