@@ -95,7 +95,12 @@ public class BookShop { //
         }
     }
 
-    public static void defaultOrders(LinkedList<Book> ll, Administrator a) {
+
+    public static void defaultOrders(LinkedList<Book> ll, Administrator a) { // a static helper method for generating past orders in our BookShop
+        // five customers with different info order random books from the Book list
+        // their orders are processed by the administrator and added into allOrders
+        // different order statuses are set for each customer
+        // this method is used for administrator purposes, i.e. viewing order histories and checking completed orders
         Customer c = new Customer("pattyj@aol.com", "mummy2", "iluvu1987", "Patty", "Johnson");
         Order o1 = new Order(c);
         o1.addToOrder(ll.get(0));
@@ -129,7 +134,7 @@ public class BookShop { //
         a.allOrders.add(o5);
     }
 
-    public static void listOrders(ArrayList<Order> o) {
+    public static void listOrders(ArrayList<Order> o) { // a static helper method for writing orders into a file list
         try { // try this code for writing the file
             int ln = 0;
             PrintWriter pw = new PrintWriter(new FileWriter("Orders.txt"));
@@ -151,7 +156,6 @@ public class BookShop { //
         }
     }
     
-
     public void logout() {
         if (currentUser != null) { //if someone is currently logged in
             if (!savedUsers.containsKey(currentUser.getEmail())) { //current user is not saved in user database
@@ -176,7 +180,7 @@ public class BookShop { //
 
     public static void main(String[] args) {
         // Create instance of BookShop class so it can interact with non-static fields and methods
-        BookShop shop = new BookShop(); //suggested by ChatGPT
+        BookShop shop = new BookShop();
         Scanner scnr = new Scanner(System.in); // Single Scanner instance
         
         // INTRODUCTION
@@ -188,7 +192,6 @@ public class BookShop { //
 
         // PERSONAL IDENTIFICATION INFORMATION
 
-        System.out.println();
         System.out.println("Some personal information we need to know: ");
         System.out.print("What is your email? : "); // input for email as String
         String email = scnr.nextLine();
@@ -242,85 +245,81 @@ public class BookShop { //
         String userType = scnr.nextLine();
         while (!userType.equalsIgnoreCase("customer") && !userType.equalsIgnoreCase("administrator")) {
             // equalsIgnoreCase ignores the casing of the input so the user can type 'customer' or 'Customer' or 'CUSTOMER' and it would still read the same
-            // while a user does not type in customer or administrator, they cannot move on
+            // while however a user does not type in customer or administrator, they cannot move on
             System.out.println("That is not a valid user type!");
             System.out.println("Try again.");
             System.out.print("Do you identify as a 'customer' or an 'administrator'? : ");
             userType = scnr.nextLine();
         }
 
-        if (userType.equalsIgnoreCase("customer")) {
-            Customer c = new Customer(email, username, password, firstName, lastName);
+        if (userType.equalsIgnoreCase("customer")) { // if a User is a customer
+            Customer c = new Customer(email, username, password, firstName, lastName); // create an account for that customer
             shop.currentUser = c; // Assign currentUser as the customer
             shop.saveUser(c); // Save customer to user database
-            System.out.println(c);
+            System.out.println(c); // print customer details
             System.out.println(); 
             System.out.println("Congrats! Your account has been successfully created. Anything you'd like to review or change before we move on?");
-            System.out.print("Type 'yes' or 'no' : ");
+            System.out.print("Type 'yes' or 'no' : "); // decision if a person wants to look at their account or not
             String decision = scnr.nextLine();
-            if (decision.equalsIgnoreCase("yes")) {
+            if (decision.equalsIgnoreCase("yes")) { // if a customer wants to do something to their account
                 System.out.print("Alrighty! Would you like to 'review' or 'change' something in your account? : ");
-                String action = scnr.nextLine();
-                if (action.equalsIgnoreCase("review")) {
-                    c.checkAccount(scnr);
+                String action = scnr.nextLine(); // input whether they want to review or change something
+                if (action.equalsIgnoreCase("review")) { // if a person wants to check something in their account
+                    c.checkAccount(scnr); // checkAccount() helper method is called with the current scanner
+                    // this method pulls a certain piece of information from a User's account and prints it
                 }
-                if (action.equalsIgnoreCase("change")) {
-                    c.changeAccount(scnr);
+                if (action.equalsIgnoreCase("change")) { // if a person wants to change something in their account
+                    c.changeAccount(scnr); // changeAccount() helper method is called with the current scanner
+                    // this method alters a certain piece of information for the User
+                    // everything except name is acceptable in this case
                 }
             }
-            LinkedList<Book> books = new LinkedList<>();
+            LinkedList<Book> books = new LinkedList<>(); // a new linkedlist of type Book is declared
+            // this linkedList will be used to store the books in our BookShop
             System.out.println();
             System.out.println("ALL BOOKS IN BOOKSHOP");
             System.out.println("---------------------");
             System.out.println();
-            books = defaultBooks(books);
-            listBooks(books);
-            printBooks(books);
+            books = defaultBooks(books); 
+            // defaultBooks() is called to generate a list of standard books saved in the BookShop
+            // books LinkedList is assigned to all default books
+            listBooks(books); // listBooks() creates a txt file of the books
+            printBooks(books); // printBooks() prints the books into the terminal
             System.out.println("Let's continue!");
             System.out.println("Above is a list of books we have at the current moment!");
             System.out.println("To view the list in full, see the file we've deposited to your account on the side of this interface.");
 
-            System.out.print("Would you like to do anything else today? (yes/no) : ");
+            System.out.print("Would you like to do anything else today? (yes/no) : "); // asks the customer if they are here to shop or simply view
             String decision2 = scnr.nextLine();
-            if (decision2.equalsIgnoreCase("yes")) {
+            if (decision2.equalsIgnoreCase("yes")) { // if the customer is here to shop
                 System.out.println("Alright then :)");
-                System.out.println("On our website, you can interact with books in 2 ways: ");
+                System.out.println("On our website, you can interact with books in 2 ways: "); 
+                // customers have the option to add books to their cart or purchase directly
                 System.out.println("\t1) Adding Books To Your Cart");
                 System.out.println("\t2) Purchasing And Ordering Books Directly");
                 System.out.println("Which one would you like to do?");
-                System.out.print("Type 'add' or 'purchase' here : ");
+                System.out.print("Type 'add' or 'purchase' here : "); // input for option 1 or option 2
                 String action2 = scnr.nextLine();
-                if (action2.equalsIgnoreCase("add")) {
-                    System.out.print("Would you like to continue in 'add' mode? (yes/no) : ");
+                if (action2.equalsIgnoreCase("add")) { // if a customer wants to add books to their cart
+                    System.out.print("Would you like to continue in 'add' mode? (yes/no) : "); // asks the customer one last time if they'd like to continue
                     String addMode = scnr.nextLine();
-                    while (addMode.equalsIgnoreCase("yes")) {
-                        if (c.getCart().isEmpty()) {
-                            System.out.println("Let's add to your cart!");
-                            String add = "add";
-                            while (add.equalsIgnoreCase("add")) {
-                                c.addCart(books);
-                                System.out.println();
-                                System.out.println("Book added!");
-                                System.out.println("Any other books you'd like to add?");
-                                System.out.print("Type 'add' if yes, anything else if no: ");
-                                add = scnr.nextLine();
-                            }        
+                    while (addMode.equalsIgnoreCase("yes")) { // while a user wants to edit their cart
+                        if (c.getCart().isEmpty()) { // if their cart is currently empty
+                            c.firstAdd(books, scnr);
                         }
-                        else {
-                            c.moreOptions(books);
+                        else { // if a customer's cart is not empty
+                            c.moreOptions(books); // they are presented with more options
+                            // they can do one of three things
+                            //  1) add more books
+                            //  2) remove books
+                            //  3) clear their entire cart
                         }
-                        System.out.println("Edit Success!");
+                        System.out.println("Edit Success!"); // when a change is successful
                         System.out.println("Here's what your cart looks like...");
                         System.out.println();
-                        int ln = 0;
-                        for (Book b : c.getCart()) {
-                            System.out.println(++ln);
-                            System.out.println();
-                            System.out.println(b);
-                            System.out.println();
-                        }
+                        printBooks(c.getCart()); // a user is shown in the terminal the books their cart contains
                         System.out.print("Any second thoughts about editing your cart before purchase? (yes/no) : ");
-                        addMode = scnr.nextLine();
+                        addMode = scnr.nextLine(); // asks the customer if they still wn
                     }
                 }
                 System.out.print("Would you like to continue purchasing? (yes/no) : ");
@@ -342,6 +341,8 @@ public class BookShop { //
                             
                             c.getOrders().add(o);
                             // Assuming you have access to Administrator to add to allOrders
+
+                            listBooks(books);
                         }
                     }
                     else {
@@ -414,6 +415,7 @@ public class BookShop { //
                         if (finalDecision2.equalsIgnoreCase("pay")) {
                             System.out.println("CONGRADULATIONS!!!! Your Order has been placed!");
                             c.getOrders().add(o2);
+                            listBooks(books);
                             // Assuming you have access to Administrator to add to allOrders
                         }
                     }
@@ -546,7 +548,7 @@ public class BookShop { //
                 admindecision = scnr.nextLine(); //takes in user choice 
             }
             shop.logout(); //logout the Administrator since they don't want to continue
-        }
+        }      
         System.out.println("Thank you! Goodbye! :>");
         scnr.close(); // Close the Scanner at the end of the program
     }
