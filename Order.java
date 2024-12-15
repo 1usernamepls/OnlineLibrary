@@ -3,13 +3,20 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Random;
 
+//Order class represents an order placed by a customer on the website
+
 public class Order {
-    private int orderID;
-    private double total;
-    private String status; 
-    private LocalDate date;
-    private Customer customer;
-    private ArrayList<Book> items;
+    private int orderID; // member variable that represents a unique identifier for the order
+    private double total; // member variable that represents the total cost of the ordder
+    private String status; // member variable that represents the current status of the order (e.g., "Pending", "Shipped", "Delivered")
+    private LocalDate date; // member variable that represents the date the order was placed.
+    private Customer customer; // member variable that represents the customer who placed the order
+    private ArrayList<Book> items; // member variable that represents the list  of books in the order.
+
+    // Constructor: 
+    // This constructor initializes a new Order for the given customer.
+    // Sets the order status to "Pending", generates a random order ID,
+    // and initializes the items list.
 
     public Order(Customer c){
         customer = c; //get an existing customer on the website for the order
@@ -23,7 +30,8 @@ public class Order {
         items = new ArrayList<>();
     }
 
-    //copy constructor
+    //copy constructor: 
+    // this copy constructor creates a new order that is a copy of the given order.
     public Order(Order o){
         this.customer = o.customer;
         this.total = o.total;
@@ -37,6 +45,9 @@ public class Order {
         }
     }
 
+    //addToOrder method:
+    // this method adds a book to the order if its in stock.
+    // and updated the order total and decreases the book's stock.
     public void addToOrder(Book book){
         if (book == null){
             throw new IllegalArgumentException("Invalid book: Sorry that book is not available at the shop and cannot be added to the order");
@@ -51,6 +62,9 @@ public class Order {
         }
     }
 
+    // removeBookFromOrder method:
+    // this is a method that is built to remove a book from the order if it exists.
+    // the method also updates the order total and increases the book's stock.
     public void removeBookFromOrder(Book book){
         if (book == null){
             System.out.println("Sorry that book in not available at the shop and cannot be removed from order");
@@ -69,6 +83,10 @@ public class Order {
         }
     }
 
+    // updatedStatus method:
+    // this is a method that has been designed to update the order status based on the number
+    // of days since it the order was placed. 
+    // this method also returns the updated status.
     public String updatedStatus(){
         LocalDate current = LocalDate.now();
         long daysElapsed = ChronoUnit.DAYS.between(date, current); 
@@ -85,6 +103,9 @@ public class Order {
         return status;
     }
 
+    // calculateTotal method:
+    // a method that calculates the total cost of the order by summing the prices of all the 
+    // books in the order.
     public double calculateTotal(){
         total = 0.0;
         for (Book book : items){
@@ -93,6 +114,10 @@ public class Order {
         return total;
     }
 
+    // toString method:
+    // this is a toString method that returns a string representation of the order, including 
+    // the customer details, order ID, order date, books in the order, order total, and order status
+    // as well as the total cost of the order.
     public String toString(){
         String s = "";
         s += "ORDER DETAILS \n";
@@ -112,6 +137,9 @@ public class Order {
         return s;
     }
 
+    // equals method:
+    // this is a method that checks if two orders are equal based on theri order ID, customer,
+    // and total cost.
     public boolean equals(Object o){
         if (this == o){
             return true;
@@ -125,50 +153,63 @@ public class Order {
         this.total == order.total;
     }
 
-    //accessors 
+    //The following are Accessors:
+
+    // an accessor for member variable order ID.
     public int getOrderID(){
         return orderID;
     }
 
+    // an accessor for customer.
     public Customer getCustomer(){
         return customer;
     }
 
+    // an accessor for order items.
     public ArrayList<Book> getOrderItems(){
         return items;
     }
 
+    // an accessor for order total.
     public double getOrderTotal(){
         return total;
     }
 
+    // an accessor for order status.
     public String getOrderStatus(){
         return status;
     }
 
+    // an accessor for order date.
     public LocalDate getOrderDate(){
         return date;
     }
 
-    //mutators
+    // The following are Mutators:
+
+    // Mutator for order ID. Which validates that the ID is a 5-digit number.
     public void setOrderID(int i){
         if (i < 100000 && i > 9999){
             orderID = i;
         }
     }
 
+    // Mutator for order total.
     public void setOrderTotal(double t){
         total = t;
     }
 
+    // Mutator for order status.
     public void setOrderStatus(String s){
         status = s;
     }
 
+    // Mutator for customer.
     public void setCustomer(Customer c){
         customer = c;
     }
 
+    // Mutator for order items.
     public void setOrderItems(ArrayList<Book> b){
         items = b;
     }
