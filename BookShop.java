@@ -176,7 +176,7 @@ public class BookShop { //
 
     public static void main(String[] args) {
         // Create instance of BookShop class so it can interact with non-static fields and methods
-        BookShop shop = new BookShop();
+        BookShop shop = new BookShop(); //suggested by ChatGPT
         Scanner scnr = new Scanner(System.in); // Single Scanner instance
         
         // INTRODUCTION
@@ -188,6 +188,7 @@ public class BookShop { //
 
         // PERSONAL IDENTIFICATION INFORMATION
 
+        System.out.println();
         System.out.println("Some personal information we need to know: ");
         System.out.print("What is your email? : "); // input for email as String
         String email = scnr.nextLine();
@@ -241,7 +242,7 @@ public class BookShop { //
         String userType = scnr.nextLine();
         while (!userType.equalsIgnoreCase("customer") && !userType.equalsIgnoreCase("administrator")) {
             // equalsIgnoreCase ignores the casing of the input so the user can type 'customer' or 'Customer' or 'CUSTOMER' and it would still read the same
-            // while however a user does not type in customer or administrator, they cannot move on
+            // while a user does not type in customer or administrator, they cannot move on
             System.out.println("That is not a valid user type!");
             System.out.println("Try again.");
             System.out.print("Do you identify as a 'customer' or an 'administrator'? : ");
@@ -422,18 +423,19 @@ public class BookShop { //
 
         if (userType.equalsIgnoreCase("administrator")) {
             LinkedList<Book> books2 = new LinkedList<>();
-            books2 = defaultBooks(books2);
+            books2 = defaultBooks(books2); //create a new LinkedList for the store's default book catalog
             Administrator a = new Administrator(email, username, password, firstName, lastName);
-            shop.currentUser = a;
+            shop.currentUser = a; //assigns the Administator as the currentUser of the website
             shop.saveUser(a); // save administrator to user database
-            a.books = books2;
+            a.books = books2; //assigns the Administrator's variable books, which holds all the store's books as the default catalog
             System.out.println(a);
             System.out.println("Congrats! Your account has been successfully created.");
             System.out.println("Would you like to continue?");
-            System.out.println("Type 'yes' or 'no' : ");
+            System.out.print("Type 'yes' to continue or 'no' to logout: ");
             String admindecision = scnr.nextLine();
             while (admindecision.equalsIgnoreCase("yes")) {
                 System.out.println("What would you like to do?");
+                System.out.println();
                 a.administratorMenu();
                 System.out.print("Type the number of the option you'd like to choose: ");
                 if (scnr.hasNextInt()) {
@@ -445,32 +447,32 @@ public class BookShop { //
                             System.out.println();
                             System.out.println("----------REVIEW ACCOUNT----------");
                             System.out.println();
-                            a.checkAccount(scnr); //Notice how im passing a scanner object
+                            a.checkAccount(scnr); //calls the checkAccount() method from the Administrator class
                             break;
                         case 2:
                             System.out.println();
                             System.out.println("----------CHANGE ACCOUNT----------");
                             System.out.println();
-                            a.changeAccount(scnr);
+                            a.changeAccount(scnr); //calls the changeAccount() method from the Administrator class
                             break;
                         case 3:
                             System.out.println();
                             System.out.println("----------ADD A BOOK TO THE SHOP----------");
                             System.out.println();
-                            listBooks(a.getBooks());
-                            a.createBooksToAdd(scnr);
-                            listBooks(a.getBooks());
-                            printBooks(a.getBooks());
+                            listBooks(a.getBooks()); //get current list of Book objects from the txt file
+                            a.createBooksToAdd(scnr); //calls the createBooksToAdd() method from the Administrator class
+                            listBooks(a.getBooks()); 
+                            printBooks(a.getBooks()); //print updated list of Book objects
                             System.out.println("Book Addition Success!");
                             break;
                         case 4:
                             System.out.println();
                             System.out.println("----------REMOVE A BOOK FROM THE SHOP----------");
                             System.out.println();
-                            listBooks(a.getBooks());
-                            printBooks(a.getBooks());
-                            a.removeBookFromStore(scnr);
-                            listBooks(a.getBooks());
+                            listBooks(a.getBooks()); 
+                            printBooks(a.getBooks()); 
+                            a.removeBookFromStore(scnr); //calls the removeBookFromStore() method from the Administrator class
+                            listBooks(a.getBooks()); 
                             printBooks(a.getBooks());
                             System.out.println("Book Removal Success!");
                             break;
@@ -479,8 +481,8 @@ public class BookShop { //
                             System.out.println("----------UPDATE BOOK STOCK----------");
                             System.out.println();
                             listBooks(a.getBooks());
-                            printBooks(a.getBooks());
-                            a.updateStock(scnr);
+                            printBooks(a.getBooks()); 
+                            a.updateStock(scnr); //calls the updateStock() method from the Administrator class
                             listBooks(a.getBooks());
                             printBooks(a.getBooks());
                             System.out.println("Stock Update Success!");
@@ -491,7 +493,7 @@ public class BookShop { //
                             System.out.println();
                             listBooks(a.getBooks());
                             printBooks(a.getBooks());
-                            a.updatePrice(scnr);
+                            a.updatePrice(scnr); //calls the updatePrice() method from the Administrator class 
                             listBooks(a.getBooks());
                             printBooks(a.getBooks());
                             System.out.println("Price Update Success!");
@@ -500,33 +502,31 @@ public class BookShop { //
                             System.out.println();
                             System.out.println("----------VIEW SHOP'S ORDERS----------");
                             System.out.println();
-                            defaultOrders(a.getBooks(), a);
-                            listOrders(a.getAllOrders());
-                            a.viewOrderHistory();
+                            defaultOrders(a.getBooks(), a); //contains a default list of Order objects for the store
+                            listOrders(a.getAllOrders()); //adds Order objects from the Administrator class' allOrders variable to the txt file
+                            a.viewOrders(); //calls the viewOrders() method from the Administrator class
                             System.out.println();
-                            System.out.println("Order History Above ^");
+                            System.out.println("Store's Orders Listed Above ^");
                             break;
                         case 8:
                             System.out.println();
                             System.out.println("----------UPDATE COMPLETED ORDERS----------");
                             System.out.println();
-                            defaultOrders(a.getBooks(), a);
+                            defaultOrders(a.getBooks(), a); 
                             listOrders(a.getAllOrders());
-                            a.addFinishedOrder();
-                            for (Order o : a.completedOrders) {
-                                System.out.println(o);
+                            a.addFinishedOrder(); //calls the addFinishedOrder() method from the Administrator class
+                            for (Order o : a.getCompletedOrders()) { 
+                                System.out.println(o); // prints out all the Order objects with the "completed" status
+                                System.out.println();
                             }
                             System.out.println("All Completed Orders Above ^");
-                            break; // Added break to prevent fall-through
-                        case 9:
-                            shop.logout();
-                            break;
+                            break; 
                         default:
                             System.out.println("Invalid option! Please try again.");
                             System.out.println();
                             a.administratorMenu();
                             System.out.print("Type the number of the option you'd like to choose: ");
-                            if (scnr.hasNextInt()) {
+                            if (scnr.hasNextInt()) { //ensure the input is an integer 
                                 choice = scnr.nextInt();
                                 scnr.nextLine(); // Consume the leftover newline
                                 
@@ -535,14 +535,17 @@ public class BookShop { //
                                 scnr.nextLine(); // Consume the invalid input
                             }
                     }
-                } else {
+                } 
+                else {
                     System.out.println("Invalid input. Please enter a valid number.");
                     scnr.nextLine(); // Consume the invalid input
                 }
+                System.out.println();
                 System.out.println("Would you like to continue with more actions?");
-                System.out.println("Type 'yes' or 'no' : ");
-                admindecision = scnr.nextLine();
+                System.out.print("Type 'yes' to continue or 'no' to logout: ");
+                admindecision = scnr.nextLine(); //takes in user choice 
             }
+            shop.logout(); //logout the Administrator since they don't want to continue
         }
         System.out.println("Thank you! Goodbye! :>");
         scnr.close(); // Close the Scanner at the end of the program
