@@ -297,7 +297,7 @@ public class BookShop { //
                             System.out.println("Let's add to your cart!");
                             String add = "add";
                             while (add.equalsIgnoreCase("add")) {
-                                c.addCart(books, scnr);
+                                c.addCart(books);
                                 System.out.println();
                                 System.out.println("Book added!");
                                 System.out.println("Any other books you'd like to add?");
@@ -306,7 +306,7 @@ public class BookShop { //
                             }        
                         }
                         else {
-                            c.moreOptions(books, scnr);
+                            c.moreOptions(books);
                         }
                         System.out.println("Edit Success!");
                         System.out.println("Here's what your cart looks like...");
