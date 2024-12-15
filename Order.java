@@ -131,7 +131,7 @@ public class Order {
             s += book.toString() + "\n";
         }
         s += "\n";
-        s += "Order Total: " + total + "\n";
+        s += "Order Total: $" + total + "\n";
         s += "Order Status: " + status + "\n";
 
         return s;
