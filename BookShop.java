@@ -349,7 +349,6 @@ public class BookShop { //
                             System.out.println("Your order has been canceled");
                         }
                     }
-                }
                     else { // if a customer's cart is empty because they wanted to purchase directly
                         Order o2 = new Order(c); // create an order object for them
                         String addBook = "add"; // default variable value
@@ -429,6 +428,7 @@ public class BookShop { //
                             System.out.println("Remember to pick it up at any of our in-store locations for your convenience.");
                         }
                     }
+                }
             }
         }
 
