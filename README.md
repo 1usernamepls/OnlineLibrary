@@ -9,9 +9,19 @@ AUTHOR INFO
 - Course Number And Section: CPSC-231-01
 - Assignment Or Exercise Number: MP4: Build What You Want
 
-ERRORS
+ERRORS (RUNTIME)
 
-- N/A
+- Multiple scanner issues in "cart" methods
+- Conceptually, our team followed the Scanner structure to the precise detail, however, 'no line found' exceptions still arise when removing books from the customer's carts and clearing them
+- Adding books to the cart works, but you'll most likely find another issue that happens even when commenting out the firstRemove() and clearMyCart() methods... it doesn't allow you to purchase because another Scanner issue comes up
+- Formatting of this specific exception will often appear as follows:
+
+-- Exception in thread "main" java.util.NoSuchElementException: No line found
+        at java.util.Scanner.nextLine(Scanner.java:1540)
+        at Customer.firstRemove(Customer.java:116)
+        at BookShop.main(BookShop.java:318)
+
+- To Avoid Reaching The Above Exception, always choose Option 2 (Purchasing Directly) to run the program all the way through
 
 SOURCES
 
@@ -22,10 +32,7 @@ SOURCES
      https://stackoverflow.com/questions/27005861/calculate-days-between-two-dates-in-java-8
   
 - ChatGPT was used to error check and make corrections within the createBooksToAdd() method inside of the Administrator.java class. 
-  Roughly 60-70% of the code was originally made by us. 
-  
-- *I think we can delete this *ChatGPT was used to get the main method in the BookShop class to interact with non-static methods
-     this was the prompt entered: "these lines 'saveUser(c);' and 'logout();' are being marked as errors in vs code in my main method, any idea why?"
+  Roughly 60-70% of that specific code was originally made by us. 
   
 - Did some research on Scanner objects to see how we could implement them more neatly
      https://stackoverflow.com/questions/65503259/should-a-scanner-only-be-instantiated-only-once-if-thats-the-case-why-so / 
