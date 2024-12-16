@@ -77,7 +77,6 @@ public class Administrator extends User {
    //method to update the completedOrder list 
     public void addFinishedOrder(){
         for (Order order : allOrders){
-            order.updatedStatus(); //calls the updatedStatus method from the Order class to update status based on time passed
             if (order.getOrderStatus().equals("Delivered")) {
                 if (!completedOrders.contains(order)) { //avoids completed orders from continuously being added to completedOrders
                     completedOrders.add(order); 
@@ -129,117 +128,125 @@ public class Administrator extends User {
     public void createBooksToAdd(Scanner scnr){ //passing scanner as an argument
         System.out.println("Enter the information of the book to add: ");
         System.out.print("Title: ");
-        String title = scnr.nextLine().trim();
+        String title = scnr.nextLine().trim(); // inputs title
         System.out.print("Author: ");
-        String author = scnr.nextLine().trim();
+        String author = scnr.nextLine().trim(); // inputs author
         System.out.print("Language: ");
-        String language = scnr.nextLine().trim();
+        String language = scnr.nextLine().trim(); // inputs language
         int year = 0;
-        while (true) {
+        while (true) { // error handling for years published
             System.out.print("Year Published: ");
-            String yearInput = scnr.nextLine().trim();
+            String yearInput = scnr.nextLine().trim(); // inputs published year
             try {
                 year = Integer.parseInt(yearInput);
-                if (year > 0) break;
+                if (year > 0) break; // if year is a valid positive integer, break
                 else System.out.println("Year must be a positive integer.");
-            } catch (NumberFormatException e) {
+            } catch (NumberFormatException e) { // if year is not a valid number
                 System.out.println("Invalid input. Please enter a valid year (e.g., 2021).");
+                // print error and try again
             }
         }
-        double price = 0.0;
-        while (true) {
+        double price = 0.0; // reference integer to ensure price is a positive double
+        while (true) { // error handling for price
             System.out.print("Price (e.g., 19.99): ");
-            String priceInput = scnr.nextLine().trim();
-            if (priceInput.startsWith("$")) {
+            String priceInput = scnr.nextLine().trim(); // inputs price
+            if (priceInput.startsWith("$")) { // if a price starts with a $, trim this
                 priceInput = priceInput.substring(1).trim();
             }
             try {
                 price = Double.parseDouble(priceInput);
-                if (price >= 0) break;
+                if (price >= 0) break; // if the new price for priceInput is greater than or equal to 0, break
                 else System.out.println("Price cannot be negative.");
-            } catch (NumberFormatException e) {
+            } catch (NumberFormatException e) { // if price is not a valid number
                 System.out.println("Invalid price format. Please enter a valid number (e.g., 19.99).");
+                // print error and try again
             }
         }
-        boolean availability = false;
-        while (true) {
+        boolean availability = false; // default value is false
+        while (true) { // error handling for availability
             System.out.print("Availability (enter 'true' or 'false'): ");
-            String availInput = scnr.nextLine().trim().toLowerCase();
+            String availInput = scnr.nextLine().trim().toLowerCase(); // inputs availability as lowercase
             if (availInput.equals("true") || availInput.equals("false")) {
-                availability = Boolean.parseBoolean(availInput);
+                availability = Boolean.parseBoolean(availInput); // if availability is true or false, break
                 break;
-            } else {
+            } else { // if availability is not a valid input
                 System.out.println("Invalid input. Please enter 'true' or 'false'.");
+                // print error and try again
             }
         }
-        int stock = 0;
-        while (true) {
+        int stock = 0; // default value for stock
+        while (true) { // error handling for stock
             System.out.print("Stock: ");
-            String stockInput = scnr.nextLine().trim();
+            String stockInput = scnr.nextLine().trim(); // inputs stock
             try {
                 stock = Integer.parseInt(stockInput);
-                if (stock >= 0) break;
+                if (stock >= 0) break; // if stock is a number greater than or equal to 0, break
                 else System.out.println("Stock cannot be negative.");
-            } catch (NumberFormatException e) {
+            } catch (NumberFormatException e) { // if stock is not a valid number
                 System.out.println("Invalid input. Please enter a valid number for stock (e.g., 10).");
+                // print error and try again
             }
         }
-        String bookType = "";
-        while (true) {
-            System.out.print("Is the book Fiction or Nonfiction? ");
-            bookType = scnr.nextLine().trim();
+        String bookType = ""; // begins book with a blank string for input
+        while (true) { // error handling for book types
+            System.out.print("Is the book 'Fiction' or 'Nonfiction' ? ");
+            bookType = scnr.nextLine().trim(); // inputs book type
             if (bookType.equalsIgnoreCase("Fiction") || bookType.equalsIgnoreCase("Nonfiction")) {
-                break;
-            } else {
+                break; // if book type is fiction or nonfiction, break
+            } else { // if invalid input
                 System.out.println("Invalid input. Please enter 'Fiction' or 'Nonfiction'.");
+                // print error and try again
             }
         }
         if (bookType.equalsIgnoreCase("Fiction")){ //gets the unique information need for a Fiction book object
             boolean bSeller = false;
-            while (true) {
+            while (true) { // error handling for bestseller
                 System.out.print("Is it a bestseller (enter 'true' or 'false'): ");
-                String bSellerInput = scnr.nextLine().trim().toLowerCase();
+                String bSellerInput = scnr.nextLine().trim().toLowerCase(); // inputs bestseller in lowercase
                 if (bSellerInput.equals("true") || bSellerInput.equals("false")) {
-                    bSeller = Boolean.parseBoolean(bSellerInput);
+                    bSeller = Boolean.parseBoolean(bSellerInput); // if bestseller is a valid boolean, break
                     break;
-                } else {
+                } else { // if it is not a valid boolean
                     System.out.println("Invalid input. Please enter 'true' or 'false'.");
+                    // print error and try again
                 }
             }
             System.out.print("Book Genre: ");
-            String genre = scnr.nextLine().trim();
+            String genre = scnr.nextLine().trim(); // inputs book genre
             System.out.print("Target age of readers (e.g., 8+, 12+): ");
-            String age = scnr.nextLine().trim();
+            String age = scnr.nextLine().trim(); // inputs age range
             Fiction newBook = new Fiction(title, author, language, year, price, availability, stock, genre, bSeller, age);
             addBook(newBook); //adds the Fiction book to the store's catalog using the addBook() method
         }
         else if (bookType.equalsIgnoreCase("Nonfiction")){ //gets the unique information needed for a Nonfiction book object
             String genre = scnr.nextLine().trim();
-            int edition = 0;
-            while (true) {
+            int edition = 0; // default edition number
+            while (true) { // error handling for edition
                 System.out.print("Edition: ");
-                String editionInput = scnr.nextLine().trim();
+                String editionInput = scnr.nextLine().trim(); // inputs edition
                 try {
                     edition = Integer.parseInt(editionInput);
-                    if (edition > 0) break;
+                    if (edition > 0) break; // if an edition is greater than 0, break
                     else System.out.println("Edition must be a positive number.");
-                } catch (NumberFormatException e) {
+                } catch (NumberFormatException e) { // if edition is not a valid input
                     System.out.println("Invalid input. Please enter a valid edition number (e.g., 1).");
+                    // print error and try again
                 }
             }
-            boolean reviewed = false;
-            while (true) {
+            boolean reviewed = false; // default value
+            while (true) { // error handling for peer reviews
                 System.out.print("Peer Reviewed (enter 'true' or 'false'): ");
-                String reviewedInput = scnr.nextLine().trim().toLowerCase();
+                String reviewedInput = scnr.nextLine().trim().toLowerCase(); // inputs peer reviewed as lowercase
                 if (reviewedInput.equals("true") || reviewedInput.equals("false")) {
-                    reviewed = Boolean.parseBoolean(reviewedInput);
+                    reviewed = Boolean.parseBoolean(reviewedInput); // if a valid boolean, break
                     break;
-                } else {
+                } else { // if invalid boolean
                     System.out.println("Invalid input. Please enter 'true' or 'false'.");
+                    // print error and try again
                 }
             }
             System.out.print("Book Topic: ");
-            String topic = scnr.nextLine().trim();
+            String topic = scnr.nextLine().trim(); // inputs book topic
             Nonfiction newBook = new Nonfiction(title, author, language, year, price, availability, stock, genre, edition, reviewed, topic);
             addBook(newBook); //adds the Nonfiction book to the store's catalog using the addBook() method
         }
