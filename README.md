@@ -4,7 +4,7 @@ A repository for our MP4 final project, where we can copy and paste code for our
 AUTHOR INFO
 
 - Full Name: Ethan E. Lopez, Chantelle Chan, Asiyah Speight, Aidan Tran
-- Student ID: 2425516, 2426311
+- Student ID: 2425516, 2428795, 2426311
 - Chapman Email: etlopez@chapman.edu, aidtran@chapman.edu, aspeight@chapman.edu, chachan@chapman.edu
 - Course Number And Section: CPSC-231-01
 - Assignment Or Exercise Number: MP4: Build What You Want
@@ -30,10 +30,8 @@ SOURCES
      https://www.geeksforgeeks.org/java-time-localdate-class-in-java/
 - stackoverflow.com was used to find a method to calculate the time elapsed between 2 dates
      https://stackoverflow.com/questions/27005861/calculate-days-between-two-dates-in-java-8
-  
 - ChatGPT was used to error check and make corrections within the createBooksToAdd() method inside of the Administrator.java class. 
-  Roughly 60-70% of that specific code was originally made by us. 
-  
+     Roughly 60-70% of that specific code was originally written by us
 - Did some research on Scanner objects to see how we could implement them more neatly
      https://stackoverflow.com/questions/65503259/should-a-scanner-only-be-instantiated-only-once-if-thats-the-case-why-so / 
      https://www.theserverside.com/blog/Coffee-Talk-Java-News-Stories-and-Opinions/Java-Scanner-User-Input-example-String-next-int-long-char / 
