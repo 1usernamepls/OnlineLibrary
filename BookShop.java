@@ -156,7 +156,8 @@ public class BookShop { //
         }
     }
     
-    public void logout() {
+    public void logout() { // a method for logging out a user from the system
+        // done for conceptual purposes if a more advanced program wanted to record multiple user activity and exiting
         if (currentUser != null) { //if someone is currently logged in
             if (!savedUsers.containsKey(currentUser.getEmail())) { //current user is not saved in user database
                 savedUsers.put(currentUser.getEmail(), currentUser); //add to current saved user database 
@@ -169,7 +170,8 @@ public class BookShop { //
         }
     }
 
-    public void saveUser(User user) {
+    public void saveUser(User user) { // a method for saving a user and their information into the system
+        // done for conceptual purposes if a more advanced program wanted to record multiple users that were on their website at once
         if (!savedUsers.containsKey(user.getEmail())) {
             savedUsers.put(user.getEmail(), user);
             System.out.println(user.getUsername() + " has been registered in the system.");
@@ -303,62 +305,65 @@ public class BookShop { //
                 if (action2.equalsIgnoreCase("add")) { // if a customer wants to add books to their cart
                     System.out.print("Would you like to continue in 'add' mode? (yes/no) : "); // asks the customer one last time if they'd like to continue
                     String addMode = scnr.nextLine();
-                    while (addMode.equalsIgnoreCase("yes")) { // while a user wants to edit their cart
+                    if (addMode.equalsIgnoreCase("yes")) { // while a user wants to add to their cart
                         if (c.getCart().isEmpty()) { // if their cart is currently empty
-                            c.firstAdd(books, scnr);
+                            c.firstAdd(books); // add books to their cart
+
+                            // ERROR METHODS
+                            // scanner not reading properly so you are unable to remove or clear carts before purchase
+                            // another thing, if you try to comment these methods out it still doesn't let you go forward
+                            // if you purchase directly, however, it does
+                            // we don't know why it's doing this but if anyone could figure it out, that would be great
+
+                            c.firstRemove(c.getCart()); // remove books from their cart
+                            c.clearMyCart(); // or clear their cart
                         }
-                        else { // if a customer's cart is not empty
-                            c.moreOptions(books); // they are presented with more options
-                            // they can do one of three things
-                            //  1) add more books
-                            //  2) remove books
-                            //  3) clear their entire cart
-                        }
-                        System.out.println("Edit Success!"); // when a change is successful
-                        System.out.println("Here's what your cart looks like...");
-                        System.out.println();
-                        printBooks(c.getCart()); // a user is shown in the terminal the books their cart contains
-                        System.out.print("Any second thoughts about editing your cart before purchase? (yes/no) : ");
-                        addMode = scnr.nextLine(); // asks the customer if they still wn
                     }
                 }
-                System.out.print("Would you like to continue purchasing? (yes/no) : ");
+                System.out.print("Would you like to continue purchasing? (yes/no) : "); // asks the customer if they want to purchase books
                 String action3 = scnr.nextLine();
-                if (action3.equalsIgnoreCase("yes")) {
-                    if (!c.getCart().isEmpty()) {
+                if (action3.equalsIgnoreCase("yes")) { // if a customer wants to purchase books
+                    if (!c.getCart().isEmpty()) { // if their cart is not empty and has books in it
                         System.out.println("Below is a simulated order of the books you'd like to pay for...");
-                        Order o = new Order(c);
-                        for (Book b : c.getCart()) {
+                        Order o = new Order(c); // create a new order for the customer with the books in their cart
+                        for (Book b : c.getCart()) { // for each book in their cart, add it to their order
                             o.addToOrder(b);
                         }
                         System.out.println();
-                        System.out.println(o);
+                        System.out.println(o); // print the customer's pending order
                         System.out.println("Would you like to PAY for this order or CANCEL?");
-                        System.out.print("Type 'pay' or 'cancel' here: ");
+                        System.out.print("Type 'pay' or 'cancel' here: "); // asks the customer if they want to pay or cancel the order
                         String finalDecision = scnr.nextLine();
-                        if (finalDecision.equalsIgnoreCase("pay")) {
-                            System.out.println("CONGRADULATIONS!!!! Your Order has been placed!");
-                            
+                        if (finalDecision.equalsIgnoreCase("pay")) { // if a customer wants to pay for the order
+                            o.setOrderStatus("Shipped"); // set order status as shipped
                             c.getOrders().add(o);
                             // Assuming you have access to Administrator to add to allOrders
+                            // adds the order to the customer's order list
 
-                            listBooks(books);
+                            listBooks(books); // updates stock values in book list
+                            System.out.println(c.getOrders()); // prints the customer's order list
+                            System.out.println("CONGRADULATIONS!!!! Your Order has been placed!");
+                            System.out.println("Remember to pick it up at any of our in-store locations for your convenience.");
+                        }
+                        else {
+                            System.out.println("Your order has been canceled");
                         }
                     }
-                    else {
-                        Order o2 = new Order(c);
-                        String addBook = "add";
+                }
+                    else { // if a customer's cart is empty because they wanted to purchase directly
+                        Order o2 = new Order(c); // create an order object for them
+                        String addBook = "add"; // default variable value
                         while (addBook.equalsIgnoreCase("add")) {
                             System.out.println("Agreed :> What book would you like to purchase in your order?");
-                            System.out.print("Type the number of the book you want here: ");
-                            if (scnr.hasNextInt()) {
-                                int bNum = scnr.nextInt();
+                            System.out.print("Type the number of the book you want here: "); // inputs book num to add to order
+                            if (scnr.hasNextInt()) { // if the scanner has a nextInt
+                                int bNum = scnr.nextInt(); // assign bNum to variable
                                 scnr.nextLine(); // Consume the leftover newline
-                                bNum -= 1;
-                                if(bNum >= 0 && bNum < books.size()){
-                                    o2.addToOrder(books.get(bNum));
+                                bNum -= 1; // book position is defined
+                                if(bNum >= 0 && bNum < books.size()){ // if bNum is an appropriate position
+                                    o2.addToOrder(books.get(bNum)); // add that book to the order
                                 }
-                                else{
+                                else{ // if not say it is invalid
                                     System.out.println("Invalid book number.");
                                 }
                             } else {
@@ -369,37 +374,38 @@ public class BookShop { //
                             System.out.println();
                             System.out.println("Below is a simulated order of the books you'd like to pay for...");
                             System.out.println();
-                            System.out.println(o2);
+                            System.out.println(o2); // prints pending order for the customer
                             System.out.println();
                             System.out.println("Would you like to add another book or purchase?");
-                            System.out.print("Type 'add' or 'purchase' here : ");
+                            System.out.print("Type 'add' or 'purchase' here : "); // asks if the customer wants to add more books or purchase
                             addBook = scnr.nextLine();
                         }
-                        System.out.print("Any thoughts about removing books before purchase? (yes/no) : ");
+                        System.out.print("Any thoughts about removing books before purchase? (yes/no) : "); // asks the user if they want to remove books 
                         String removeBook = scnr.nextLine();
                         while (removeBook.equalsIgnoreCase("yes") && o2.getOrderItems().size() > 0) {
+                            // while a user wants to remove books and their order size is greater than 0
                             System.out.println("Ok. What book would you like to remove from your order?");
-                            int item = 0;
-                            for (Book b : o2.getOrderItems()) {
+                            int item = 0; // line numbering
+                            for (Book b : o2.getOrderItems()) { // for each book in the order
                                 System.out.println();
-                                System.out.println(++item);
+                                System.out.println(++item); // list the item number and then the item in the customer's order
                                 System.out.println();
-                                System.out.println(b);
+                                System.out.println(b); // print each book
                                 System.out.println();
                             }
-                            System.out.print("Type the number of the book you'd like to remove here: ");
+                            System.out.print("Type the number of the book you'd like to remove here: "); // reads book position
                             if (scnr.hasNextInt()) {
                                 int itemNum = scnr.nextInt();
                                 scnr.nextLine(); // Consume the leftover newline
-                                itemNum -= 1;
-                                if(itemNum >= 0 && itemNum < o2.getOrderItems().size()){
-                                    o2.removeBookFromOrder(o2.getOrderItems().get(itemNum));
+                                itemNum -= 1; // book position calculation
+                                if(itemNum >= 0 && itemNum < o2.getOrderItems().size()){ // if the position is valid
+                                    o2.removeBookFromOrder(o2.getOrderItems().get(itemNum)); // remove the book
                                     System.out.println("Below is a simulated order of the books you'd like to pay for now...");
                                     System.out.println();
-                                    System.out.println(o2);
+                                    System.out.println(o2); // prints the updated order
                                     System.out.println();
                                 }
-                                else{
+                                else{ // otherwise print invalid number
                                     System.out.println("Invalid book number.");
                                 }
                             } else {
@@ -411,15 +417,18 @@ public class BookShop { //
                             removeBook = scnr.nextLine();
                         }
                         System.out.print("Would you like to PAY for this order or CANCEL? (pay/cancel) : ");
+                        // asks the customer if they'd like to pay or bail one last time
                         String finalDecision2 = scnr.nextLine();
-                        if (finalDecision2.equalsIgnoreCase("pay")) {
-                            System.out.println("CONGRADULATIONS!!!! Your Order has been placed!");
-                            c.getOrders().add(o2);
-                            listBooks(books);
+                        if (finalDecision2.equalsIgnoreCase("pay")) { // if the customer wants to pay
+                            o2.setOrderStatus("Shipped"); // update order status
+                            c.getOrders().add(o2); // add the order to the customer's order list
+                            listBooks(books); // update book stocks in list
                             // Assuming you have access to Administrator to add to allOrders
+                            System.out.println(o2); // print the order contents
+                            System.out.println("CONGRADULATIONS!!!! Your Order has been placed!");
+                            System.out.println("Remember to pick it up at any of our in-store locations for your convenience.");
                         }
                     }
-                }
             }
         }
 
@@ -431,11 +440,36 @@ public class BookShop { //
             shop.saveUser(a); // save administrator to user database
             a.books = books2; //assigns the Administrator's variable books, which holds all the store's books as the default catalog
             System.out.println(a);
-            System.out.println("Congrats! Your account has been successfully created.");
+            System.out.println("Congrats! Your account has been successfully created.");            
             System.out.println("Would you like to continue?");
-            System.out.print("Type 'yes' to continue or 'no' to logout: ");
+            System.out.print("Type 'yes' to continue or 'no' to logout: "); // intro
             String admindecision = scnr.nextLine();
             while (admindecision.equalsIgnoreCase("yes")) {
+                System.out.println("Welcome back! Every time you perform actions, you'll have to type in serial codes");
+                System.out.println("We send emails to your boss for verification :)"); // administrator access specialties
+                Random rand = new Random();
+                int min = 100000;
+                int max = 999999;
+                int code = rand.nextInt(max - min + 1) + min;
+                System.out.println();
+                System.out.println("    EMAIL   ");
+                System.out.println("-------------"); // email simulation
+                System.out.println();
+                System.out.println("    Hello again " + a.getUsername() + ". Action approved.");
+                System.out.println();
+                System.out.println("        " + code);
+                System.out.println();
+                System.out.print("Type your code here: "); // input for code
+                if (scnr.hasNextInt()) {
+                    int codeInput = scnr.nextInt();
+                    scnr.nextLine();
+    
+                    if (codeInput != code) {
+                        System.out.println("ERROR: WRONG CODE!"); // if wrong code automatically logs out user
+                        break;
+                    }
+                }    
+
                 System.out.println("What would you like to do?");
                 System.out.println();
                 a.administratorMenu();
